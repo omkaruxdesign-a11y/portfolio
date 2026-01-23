@@ -35,6 +35,20 @@ export default function CaseStudyViewer({
 
   const currentStudy = caseStudies[currentIndex];
 
+  // Touch/swipe handling
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+  const minSwipeDistance = 50;
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  }, []);
+
   const handlePrevious = useCallback(() => {
     if (currentIndex > 0) {
       onNavigate(currentIndex - 1);
@@ -48,6 +62,23 @@ export default function CaseStudyViewer({
       contentRef.current?.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }, [currentIndex, caseStudies.length, onNavigate]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStartX.current || !touchEndX.current) return;
+
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      handleNext();
+    } else if (isRightSwipe) {
+      handlePrevious();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  }, [handleNext, handlePrevious]);
 
   // Handle keyboard navigation
   useEffect(() => {
@@ -97,6 +128,9 @@ export default function CaseStudyViewer({
       role="dialog"
       aria-modal="true"
       aria-label={`Case study: ${currentStudy.title}`}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Navigation Arrows - Outside animated container to stay viewport-centered */}
       {showNavigation && currentIndex > 0 && (
@@ -120,7 +154,7 @@ export default function CaseStudyViewer({
               )}
             </div>
             {/* Label */}
-            <div className="flex items-center gap-1 text-white/70 group-hover:text-white transition-colors">
+            <div className="flex items-center gap-1 text-white/70 group-hover:text-white transition-colors z-3">
               <CaretLeft size={12} weight="bold" />
               <span className="text-xs font-medium">Prev</span>
             </div>
@@ -222,6 +256,36 @@ export default function CaseStudyViewer({
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation Arrows */}
+      {showNavigation && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-4 lg:hidden bg-black/70 backdrop-blur-sm p-2 rounded-full">
+          <button
+            onClick={handlePrevious}
+            disabled={currentIndex === 0}
+            className={`p-3 rounded-full transition-colors ${
+              currentIndex === 0
+                ? 'text-white/30 bg-white/5 cursor-not-allowed'
+                : 'text-white/70 active:text-white bg-white/10 active:bg-white/20'
+            }`}
+            aria-label="Previous project"
+          >
+            <CaretLeft size={24} weight="bold" />
+          </button>
+          <button
+            onClick={handleNext}
+            disabled={currentIndex === caseStudies.length - 1}
+            className={`p-3 rounded-full transition-colors ${
+              currentIndex === caseStudies.length - 1
+                ? 'text-white/30 bg-white/5 cursor-not-allowed'
+                : 'text-white/70 active:text-white bg-white/10 active:bg-white/20'
+            }`}
+            aria-label="Next project"
+          >
+            <CaretRight size={24} weight="bold" />
+          </button>
+        </div>
+      )}
 
       {/* Animation styles */}
       <style jsx global>{`

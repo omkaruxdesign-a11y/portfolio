@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useCallback } from 'react';
+import { useEffect, useCallback, useRef } from 'react';
 import { X, CaretLeft, CaretRight } from '@phosphor-icons/react';
 
 export interface ViewerImage {
@@ -26,6 +26,11 @@ export default function ImageViewer({
   onNavigate,
   useCenteredView = false,
 }: ImageViewerProps) {
+  // Touch/swipe handling
+  const touchStartX = useRef<number | null>(null);
+  const touchEndX = useRef<number | null>(null);
+  const minSwipeDistance = 50;
+
   const goToPrevious = useCallback(() => {
     const newIndex = currentIndex === 0 ? images.length - 1 : currentIndex - 1;
     onNavigate(newIndex);
@@ -35,6 +40,32 @@ export default function ImageViewer({
     const newIndex = currentIndex === images.length - 1 ? 0 : currentIndex + 1;
     onNavigate(newIndex);
   }, [currentIndex, images.length, onNavigate]);
+
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = null;
+    touchStartX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    if (!touchStartX.current || !touchEndX.current) return;
+
+    const distance = touchStartX.current - touchEndX.current;
+    const isLeftSwipe = distance > minSwipeDistance;
+    const isRightSwipe = distance < -minSwipeDistance;
+
+    if (isLeftSwipe) {
+      goToNext();
+    } else if (isRightSwipe) {
+      goToPrevious();
+    }
+
+    touchStartX.current = null;
+    touchEndX.current = null;
+  }, [goToNext, goToPrevious]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -79,6 +110,9 @@ export default function ImageViewer({
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md animate-blur-fade-in"
       onClick={onClose}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
       {/* Close Button */}
       <button
@@ -158,6 +192,30 @@ export default function ImageViewer({
             </p>
           </>
         )}
+      </div>
+
+      {/* Mobile Navigation Arrows */}
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-6 md:hidden">
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            goToPrevious();
+          }}
+          className="text-white/70 active:text-white p-3 rounded-full bg-white/10 active:bg-white/20 transition-colors"
+          aria-label="Previous image"
+        >
+          <CaretLeft size={24} weight="bold" />
+        </button>
+        <button
+          onClick={(e) => {
+            e.stopPropagation();
+            goToNext();
+          }}
+          className="text-white/70 active:text-white p-3 rounded-full bg-white/10 active:bg-white/20 transition-colors"
+          aria-label="Next image"
+        >
+          <CaretRight size={24} weight="bold" />
+        </button>
       </div>
 
       {/* Image transition animation */}

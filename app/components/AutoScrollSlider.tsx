@@ -121,7 +121,7 @@ export default function AutoScrollSlider({ images, onImageClick }: AutoScrollSli
             className="flex-shrink-0 group"
             onClick={() => handleImageClick(index)}
           >
-            <div className="relative w-[150px] h-[200px] rounded-lg overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:shadow-white/10 group-hover:brightness-110 select-none">
+            <div className="relative w-[200px] h-[267px] md:w-[150px] md:h-[200px] rounded-lg overflow-hidden transition-all duration-300 group-hover:shadow-lg group-hover:shadow-white/10 group-hover:brightness-110 select-none">
               <Image
                 src={image.src}
                 alt={image.description}

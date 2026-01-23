@@ -271,6 +271,7 @@ const companyCaseStudies: CaseStudy[] = [
 ];
 
 export default function Home() {
+  const [isLoaded, setIsLoaded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUxViewerOpen, setIsUxViewerOpen] = useState(false);
   const [isOffScreenViewerOpen, setIsOffScreenViewerOpen] = useState(false);
@@ -281,6 +282,11 @@ export default function Home() {
   const [currentCaseStudyIndex, setCurrentCaseStudyIndex] = useState(0);
   const [currentCompanyCaseStudyIndex, setCurrentCompanyCaseStudyIndex] = useState(0);
   const [showAllWorks, setShowAllWorks] = useState(false);
+
+  // Trigger animations after component mounts to prevent flash of content
+  useEffect(() => {
+    setIsLoaded(true);
+  }, []);
 
   const handleUxImageClick = (index: number) => {
     setCurrentUxImageIndex(index);
@@ -416,7 +422,7 @@ export default function Home() {
         .work-item-delay-7 { animation-delay: 300ms; }
       `}</style>
         {/* Hero Section */}
-        <section className="flex flex-col items-start gap-2 mb-20 animate-blur-fade-in animate-delay-1">
+        <section className={`flex flex-col items-start gap-2 mb-20 ${isLoaded ? 'animate-blur-fade-in animate-delay-1' : 'opacity-0'}`}>
           {/* Profile Image */}
           <div className="rounded-full ">
           <Image
@@ -447,7 +453,7 @@ export default function Home() {
         </section>
 
         {/* INTRO Section */}
-        <section className="space-y-6 animate-blur-fade-in animate-delay-2">
+        <section className={`space-y-6 ${isLoaded ? 'animate-blur-fade-in animate-delay-2' : 'opacity-0'}`}>
           {/* Section Heading */}
           <h3 className="text-base font-mono uppercase tracking-wider text-white">
             INTRO
@@ -521,7 +527,7 @@ export default function Home() {
         </section>
 
         {/* WORKS Section */}
-        <section className="space-y-6 mt-20 animate-blur-fade-in animate-delay-3">
+        <section className={`space-y-6 mt-20 ${isLoaded ? 'animate-blur-fade-in animate-delay-3' : 'opacity-0'}`}>
           {/* Section Heading */}
           <h3 className="text-base font-mono uppercase tracking-wider text-white">
             WORKS

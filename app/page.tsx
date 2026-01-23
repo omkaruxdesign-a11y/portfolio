@@ -1,7 +1,7 @@
 'use client';
 
 import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { User, ArrowUpRight, X, Plus, ArrowUpRightIcon } from "@phosphor-icons/react";
 import ImageSlider, { SliderImage } from "./components/ImageSlider";
 import ImageViewer, { ViewerImage } from "./components/ImageViewer";
@@ -286,6 +286,61 @@ export default function Home() {
   // Trigger animations after component mounts to prevent flash of content
   useEffect(() => {
     setIsLoaded(true);
+  }, []);
+
+  // Track if modal was closed via back button to avoid double history.back()
+  const closedViaBackRef = useRef(false);
+
+  // Handle browser back button to close modals
+  useEffect(() => {
+    const handlePopState = () => {
+      closedViaBackRef.current = true;
+      // Close all modals when back is pressed
+      setIsModalOpen(false);
+      setIsUxViewerOpen(false);
+      setIsOffScreenViewerOpen(false);
+      setIsCaseStudyOpen(false);
+      setIsCompanyCaseStudyOpen(false);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  // Push history state when any modal opens
+  useEffect(() => {
+    const isAnyModalOpen = isModalOpen || isUxViewerOpen || isOffScreenViewerOpen || isCaseStudyOpen || isCompanyCaseStudyOpen;
+
+    if (isAnyModalOpen) {
+      closedViaBackRef.current = false;
+      window.history.pushState({ modal: true }, '');
+    }
+  }, [isModalOpen, isUxViewerOpen, isOffScreenViewerOpen, isCaseStudyOpen, isCompanyCaseStudyOpen]);
+
+  // Close handlers that also handle history
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    if (!closedViaBackRef.current) window.history.back();
+  }, []);
+
+  const closeUxViewer = useCallback(() => {
+    setIsUxViewerOpen(false);
+    if (!closedViaBackRef.current) window.history.back();
+  }, []);
+
+  const closeOffScreenViewer = useCallback(() => {
+    setIsOffScreenViewerOpen(false);
+    if (!closedViaBackRef.current) window.history.back();
+  }, []);
+
+  const closeCaseStudy = useCallback(() => {
+    setIsCaseStudyOpen(false);
+    if (!closedViaBackRef.current) window.history.back();
+  }, []);
+
+  const closeCompanyCaseStudy = useCallback(() => {
+    setIsCompanyCaseStudyOpen(false);
+    if (!closedViaBackRef.current) window.history.back();
   }, []);
 
   const handleUxImageClick = (index: number) => {
@@ -923,7 +978,7 @@ export default function Home() {
         images={uxViewerImages}
         currentIndex={currentUxImageIndex}
         isOpen={isUxViewerOpen}
-        onClose={() => setIsUxViewerOpen(false)}
+        onClose={closeUxViewer}
         onNavigate={setCurrentUxImageIndex}
       />
 
@@ -932,7 +987,7 @@ export default function Home() {
         images={offScreenViewerImages}
         currentIndex={currentOffScreenImageIndex}
         isOpen={isOffScreenViewerOpen}
-        onClose={() => setIsOffScreenViewerOpen(false)}
+        onClose={closeOffScreenViewer}
         onNavigate={setCurrentOffScreenImageIndex}
         useCenteredView={true}
       />
@@ -942,7 +997,7 @@ export default function Home() {
         caseStudies={caseStudiesData}
         currentIndex={currentCaseStudyIndex}
         isOpen={isCaseStudyOpen}
-        onClose={() => setIsCaseStudyOpen(false)}
+        onClose={closeCaseStudy}
         onNavigate={setCurrentCaseStudyIndex}
       />
 
@@ -951,7 +1006,7 @@ export default function Home() {
         caseStudies={companyCaseStudies}
         currentIndex={currentCompanyCaseStudyIndex}
         isOpen={isCompanyCaseStudyOpen}
-        onClose={() => setIsCompanyCaseStudyOpen(false)}
+        onClose={closeCompanyCaseStudy}
         onNavigate={setCurrentCompanyCaseStudyIndex}
         showNavigation={false}
       />
@@ -960,7 +1015,7 @@ export default function Home() {
       {isModalOpen && (
         <div
           className="fixed inset-0 bg-black/80 backdrop-blur-md flex items-center justify-center p-6 z-50 modal-backdrop"
-          onClick={() => setIsModalOpen(false)}
+          onClick={closeModal}
         >
           <div
             className="bg-zinc-900 rounded-lg p-4 max-w-lg w-full modal-content"

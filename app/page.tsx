@@ -447,7 +447,7 @@ export default function Home() {
           </div>
 
           {/* Tagline */}
-          <p className="text-lg text-[#7a7a7a] text-center">
+          <p className="text-lg text-[#7a7a7a] text-start w-full">
             A <span className="text-white font-regular">Product Designer</span> now and a learner forever
           </p>
         </section>

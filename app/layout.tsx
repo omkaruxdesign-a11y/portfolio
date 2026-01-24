@@ -16,7 +16,25 @@ const dmMono = DM_Mono({
 
 export const metadata: Metadata = {
   title: "Omkar's Portfolio",
-  description: "Bringing all of my works on under a single place. You will find my Product design, freelancing, concept, side-projects and many more here!",
+  description: "Bringing all of my works under a single place. You will find my Product design, freelancing, concept, side-projects and many more here!",
+  openGraph: {
+    title: "Omkar's Portfolio",
+    description: "Bringing all of my works under a single place. You will find my Product design, freelancing, concept, side-projects and many more here!",
+    images: [
+      {
+        url: "/preview.png",
+        width: 1200,
+        height: 630,
+        alt: "Omkar - Product Designer Portfolio",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Omkar's Portfolio",
+    description: "Bringing all of my works under a single place. You will find my Product design, freelancing, concept, side-projects and many more here!",
+    images: ["/preview.png"],
+  },
 };
 
 export default function RootLayout({

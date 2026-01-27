@@ -15,26 +15,38 @@ const dmMono = DM_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Omkar's Portfolio",
-  description: "Bringing all of my works under a single place. You will find my Product design, freelancing, concept, side-projects and many more here!",
+  title: "Omkar Mangalekar - Product Designer",
+  description: "Product Designer with 2.5+ years of experience. I love things that add value to lives. Currently at SocialSonar, previously at Hyperly and VestorGrow.",
+
+  // Open Graph (for LinkedIn, Facebook, WhatsApp, etc.)
   openGraph: {
-    title: "Omkar's Portfolio",
-    description: "Bringing all of my works under a single place. You will find my Product design, freelancing, concept, side-projects and many more here!",
+    type: "website",
+    locale: "en_US",
+    title: "Omkar Mangalekar - Product Designer",
+    description: "Product Designer with 2.5+ years of experience. I love things that add value to lives.",
+    siteName: "Omkar Mangalekar Portfolio",
     images: [
       {
-        url: "/preview.png",
+        url: "/preview/preview.png",
         width: 1200,
         height: 630,
-        alt: "Omkar - Product Designer Portfolio",
+        alt: "Omkar Mangalekar - Product Designer Portfolio",
       },
     ],
   },
+
+  // Twitter Card
   twitter: {
     card: "summary_large_image",
-    title: "Omkar's Portfolio",
-    description: "Bringing all of my works under a single place. You will find my Product design, freelancing, concept, side-projects and many more here!",
-    images: ["/preview.png"],
+    title: "Omkar Mangalekar - Product Designer",
+    description: "Product Designer with 2.5+ years of experience. I love things that add value to lives.",
+    images: ["/preview/preview.png"],
   },
+
+  // Additional SEO metadata
+  keywords: ["Product Designer", "UX Designer", "UI Designer", "Portfolio", "Omkar Mangalekar", "SocialSonar", "Hyperly", "VestorGrow"],
+  authors: [{ name: "Omkar Mangalekar" }],
+  creator: "Omkar Mangalekar",
 };
 
 export default function RootLayout({

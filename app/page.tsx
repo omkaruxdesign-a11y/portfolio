@@ -529,7 +529,7 @@ export default function Home() {
 
                 className="text-white"
               >
-                2.5+ years
+                2+ years
               </a>{' '}
               now, started with freelancing and later focused on giving early stage start-ups an Headstart they need.
             </p>

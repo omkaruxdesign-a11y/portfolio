@@ -1,14 +1,15 @@
 'use client';
 
 import Image from 'next/image';
-import { useEffect, useRef, useCallback } from 'react';
-import { X, CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { useEffect, useRef, useCallback, useState } from 'react';
+import { X, CaretLeft, CaretRight, Plus } from '@phosphor-icons/react';
 
 export interface CaseStudy {
   id: string;
   title: string;
   metadata: string;
   description?: string;
+  impact?: string[];
   thumbnail?: string;
   images: string[];
 }
@@ -32,8 +33,14 @@ export default function CaseStudyViewer({
 }: CaseStudyViewerProps) {
   const contentRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
+  const [isImpactExpanded, setIsImpactExpanded] = useState(false);
 
   const currentStudy = caseStudies[currentIndex];
+
+  // Reset expanded state when changing case study
+  useEffect(() => {
+    setIsImpactExpanded(false);
+  }, [currentIndex]);
 
   // Touch/swipe handling
   const touchStartX = useRef<number | null>(null);
@@ -205,18 +212,59 @@ export default function CaseStudyViewer({
         {/* Centered Container for Header and Images */}
         <div key={currentIndex} className="max-w-[900px] mx-auto px-4 md:px-6 relative case-study-transition">
           {/* Header Section with Close Button */}
-          <header className="px-2 pt-2 md:pt-4 pb-2 md:pb-4 flex items-start bg-black/80 backdrop-blur-3xl justify-between gap-4 sticky top-0 z-3 animate-blur-fade-in">
+          <header className="px-2 pt-2 md:pt-4 pb-4 md:pb-6 flex items-start bg-black/80 backdrop-blur-3xl justify-between gap-4 sticky top-0 z-3 animate-blur-fade-in">
             <div className="flex-1">
-              <h1 className="text-2xl md:text-3xl font-bold text-white mb-2">
+              {/* Title and Metadata */}
+              <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">
                 {currentStudy.title}
               </h1>
-              <p className="text-base text-white mb-1">
+              <p className="text-sm text-[#7a7a7a] mb-4">
                 {currentStudy.metadata}
               </p>
+
+              {/* Description Section */}
               {currentStudy.description && (
-                <p className="text-base md:text-lg text-[#A1A1A1] leading-relaxed">
-                  {currentStudy.description}
-                </p>
+                <div className="mb-4">
+                  <h2 className="text-sm font-mono uppercase tracking-wider text-white mb-2">
+                    DESCRIPTION
+                  </h2>
+                  <p className="text-base text-[#A1A1A1] leading-relaxed">
+                    {currentStudy.description}
+                  </p>
+                </div>
+              )}
+
+              {/* Impact/Learnings Section - Collapsible */}
+              {currentStudy.impact && currentStudy.impact.length > 0 && (
+                <div>
+                  <button
+                    onClick={() => setIsImpactExpanded(!isImpactExpanded)}
+                    className="w-full flex items-center justify-between py-2 cursor-pointer group"
+                  >
+                    <h2 className="text-sm font-mono uppercase tracking-wider text-white">
+                      {currentStudy.metadata.includes('Concept') || currentStudy.metadata.includes('Personal') ? 'LEARNINGS' : 'IMPACT'}
+                    </h2>
+                    <Plus
+                      size={16}
+                      weight="bold"
+                      className={`text-white/70 group-hover:text-white transition-transform duration-300 ${isImpactExpanded ? 'rotate-45' : ''}`}
+                    />
+                  </button>
+                  <div
+                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                      isImpactExpanded ? 'max-h-[500px] opacity-100' : 'max-h-0 opacity-0'
+                    }`}
+                  >
+                    <ul className="space-y-1 pt-2">
+                      {currentStudy.impact.map((item, index) => (
+                        <li key={index} className="text-base text-[#A1A1A1] leading-relaxed flex">
+                          <span className="mr-3">•</span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
               )}
             </div>
 

@@ -608,6 +608,9 @@ export default function Home() {
                     alt={caseStudy.title}
                     fill
                     className="object-cover transition-all duration-300 group-hover:brightness-110"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    quality={85}
+                    priority={index < 2}
                   />
                 </div>
                 <h4 className="text-lg font-regular text-white mb-1 group-hover:underline underline-offset-2">

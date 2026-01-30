@@ -25,6 +25,8 @@ export default function BlogCard({ title, image, excerpt, date, link }: BlogCard
           alt={title}
           fill
           className="object-cover transition-transform duration-300"
+          sizes="(max-width: 640px) 100vw, 200px"
+          quality={80}
         />
       </div>
 

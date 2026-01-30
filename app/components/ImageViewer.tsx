@@ -167,6 +167,8 @@ export default function ImageViewer({
                 fill
                 className="object-contain rounded-lg"
                 priority
+                sizes="(max-width: 900px) 90vw, 900px"
+                quality={85}
               />
             </div>
             {/* Image Label */}
@@ -184,6 +186,7 @@ export default function ImageViewer({
                 className="object-contain rounded-lg"
                 priority
                 sizes="(max-width: 800px) 90vw, 800px"
+                quality={85}
               />
             </div>
             {/* Image Label */}

@@ -249,7 +249,8 @@ export default function CaseStudyViewer({
                   className="object-contain rounded-lg w-full h-auto"
                   loading={index < 2 ? 'eager' : 'lazy'}
                   priority={index === 0}
-                  unoptimized
+                  sizes="(max-width: 900px) 90vw, 900px"
+                  quality={85}
                 />
               </div>
             ))}

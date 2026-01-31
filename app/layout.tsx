@@ -16,7 +16,7 @@ const dmMono = DM_Mono({
 
 export const metadata: Metadata = {
   title: "Omkar Mangalekar - Product Designer",
-  description: "Product Designer with 2+ years of experience. I love things that add value to lives. Currently at SocialSonar, previously at Hyperly and VestorGrow.",
+  description: "Product Designer with 2+ years of experigence. I love things that add value to lives. Currently at SocialSonar, previously at Hyperly and VestorGrow.",
 
   // Open Graph (for LinkedIn, Facebook, WhatsApp, etc.)
   openGraph: {
@@ -51,8 +51,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html lang="en">
@@ -60,6 +62,7 @@ export default function RootLayout({
         className={`${dmSans.variable} ${dmMono.variable} antialiased`}
       >
         {children}
+        {modal}
       </body>
     </html>
   );

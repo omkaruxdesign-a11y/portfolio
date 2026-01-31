@@ -1,13 +1,14 @@
 'use client';
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { User, ArrowUpRight, X, Plus, ArrowUpRightIcon } from "@phosphor-icons/react";
+import { ArrowUpRight, X, Plus, ArrowUpRightIcon } from "@phosphor-icons/react";
 import ImageSlider, { SliderImage } from "./components/ImageSlider";
 import ImageViewer, { ViewerImage } from "./components/ImageViewer";
 import AutoScrollSlider, { AutoScrollImage } from "./components/AutoScrollSlider";
 import BlogCard from "./components/BlogCard";
-import CaseStudyViewer, { CaseStudy } from "./components/CaseStudyViewer";
+import { caseStudiesData } from "./data/caseStudies";
 
 // Reusable animated wrapper component for scroll-triggered animations
 function AnimateOnScroll({
@@ -110,220 +111,13 @@ const offScreenImages: AutoScrollImage[] = [
   { src: "/offscreen/7.jpg", description: "Shimla, the only place I loved except Kolhapur (my hometown)" },
 ];
 
-const caseStudiesData: CaseStudy[] = [
-  {
-    id: "opinex",
-    title: "Opinex - Fantasy Sports",
-    metadata: "Work • App • Feb 2025",
-    description: "A fantasy sports platform for opinion trading with some USPs",
-    impact: [
-      "Enabled 500+ pre-beta users to test MVP and provide iterative feedback",
-      "Reduced onboarding drop-off by 30% through simplified user flows",
-      "Helped stakeholders validate product-market fit before full development",
-    ],
-    thumbnail: "/works/opinex/1.jpg",
-    images: [
-      "/works/opinex/1.jpg",
-      "/works/opinex/2.jpg",
-      "/works/opinex/3.jpg",
-      "/works/opinex/4.jpg",
-      "/works/opinex/5.jpg",
-    ],
-  },
-  {
-    id: "nothing",
-    title: "Essential Suggestions",
-    metadata: "Concept • App-Widget • 2025",
-    description: "This was my submission for Nothing's Community submissions where community submits their ideas of app-widgets and Nothing then chooses one and works with that person. It was quite an experience, worked on something different than usual phone/web things.",
-    impact: [
-      "Designed for Nothing's widget ecosystem reaching 1M+ device users",
-      "Created interaction patterns optimized for quick glanceable information",
-      "Submission recognized in Nothing's community review process",
-    ],
-    thumbnail: "/works/nothing/1.png",
-    images: [
-      "/works/nothing/1.png",
-      "/works/nothing/2.png",
-      "/works/nothing/3.png",
-      "/works/nothing/4.png",
-      "/works/nothing/5.png",
-      "/works/nothing/6.png",
-      "/works/nothing/7.png",
-      "/works/nothing/8.png",
-      "/works/nothing/9.png",
-      "/works/nothing/10.png",
-      "/works/nothing/11.png",
-      "/works/nothing/12.png",
-      "/works/nothing/13.png",
-    ],
-  },
-  {
-    id: "micro-ott",
-    title: "Micro OTT Platform",
-    metadata: "App • Entertainment • Sept 2025",
-    description: "A micro-OTT platform which has vertically shot content which has bite sized video content.",
-    impact: [
-      "Designed for 15-second average session engagement target",
-      "Created content discovery flow reducing browse-to-watch time by 40%",
-      "Optimized for vertical-first mobile consumption patterns",
-    ],
-    thumbnail: "/works/micro-ott/1.jpg",
-    images: [
-      "/works/micro-ott/1.jpg",
-      "/works/micro-ott/2.jpg",
-    ],
-  },
-  {
-    id: "mshps",
-    title: "MSHPS - Police Housing Corp. ",
-    metadata: "Web-App • Gov-Tech • Jan 2025",
-    description: "This was a proposal kind-of design for a government organization which takes care of all the finances related to the police department",
-    impact: [
-      "Simplified 12-step financial workflow to 5 steps for 1000+ employees",
-      "Proposed design reducing average task completion time by 50%",
-      "Modernized interface for improved accessibility compliance",
-    ],
-    thumbnail: "/works/mshps/1.png",
-    images: [
-      "/works/mshps/1.png",
-      "/works/mshps/2.png",
-      "/works/mshps/3.png",
-      "/works/mshps/4.png",
-      "/works/mshps/5.png",
-    ],
-  },
-  {
-    id: "futura",
-    title: "Futura",
-    metadata: "Concept • AR/VR • Jan 2025",
-    description: "This was a random problem statement I took on to explore what all can I do with my creative thinking",
-    impact: [
-      "Explored spatial UI patterns for immersive environments",
-      "Designed gesture-based interactions reducing cognitive load",
-      "Created concept showcasing future-forward design thinking",
-    ],
-    thumbnail: "/works/futura/1.png",
-    images: [
-      "/works/futura/1.png",
-      "/works/futura/2.png",
-      "/works/futura/3.png",
-      "/works/futura/4.png",
-      "/works/futura/5.png",
-      "/works/futura/6.png",
-      "/works/futura/7.png",
-      "/works/futura/8.png",
-      "/works/futura/9.png",
-    ],
-  },
-  {
-    id: "airbook",
-    title: "Airbook UX Audit",
-    metadata: "Web-App • SaaS • Feb 2025",
-    description: "Currently its, The AI-powered analytics workspace where teams bring all their data in one place, explore what's driving revenue, and act on it. Back then Audited their platform for any UX issues",
-    impact: [
-      "Identified 15+ critical usability issues affecting user retention",
-      "Recommendations projected to improve onboarding completion by 25%",
-      "Delivered actionable audit report within 2-week timeline",
-    ],
-    thumbnail: "/works/airbook/thumbnail.jpg",
-    images: [
-      "/works/airbook/01.png",
-      "/works/airbook/02.png",
-      "/works/airbook/03.png",
-      "/works/airbook/4.png",
-      "/works/airbook/5.png",
-      "/works/airbook/6.png",
-      "/works/airbook/7.png",
-      "/works/airbook/8.png",
-      "/works/airbook/9.png",
-      "/works/airbook/10.png",
-      "/works/airbook/11.png",
-      "/works/airbook/12.png",
-      "/works/airbook/13.png",
-    ],
-  },
-  {
-    id: "intro-design",
-    title: "Introduction to Design",
-    metadata: "Personal • Presentation • Oct 2025",
-    description: "This was when my professors from the college asked me to deliver a session on Design. Made this deck to help students understand what design in tech world really is. Hope I helped someone find their interest!",
-    impact: [
-      "Delivered session to 50+ engineering students",
-      "3 students reached out expressing interest in design careers",
-      "Created presentation deck for future sessions",
-    ],
-    thumbnail: "/works/intro-design/1.jpg",
-    images: [
-      "/works/intro-design/1.jpg",
-      "/works/intro-design/2.jpg",
-      "/works/intro-design/3.jpg",
-      "/works/intro-design/4.jpg",
-      "/works/intro-design/5.jpg",
-      "/works/intro-design/6.jpg",
-      "/works/intro-design/7.jpg",
-      "/works/intro-design/8.jpg",
-      "/works/intro-design/9.jpg",
-      "/works/intro-design/10.jpg",
-      "/works/intro-design/11.jpg",
-      "/works/intro-design/12.jpg",
-      "/works/intro-design/13.jpg",
-      "/works/intro-design/14.jpg",
-      "/works/intro-design/15.jpg",
-    ],
-  },
-];
-
-const companyCaseStudies: CaseStudy[] = [
-  {
-    id: "hyperly",
-    title: "Hyperly",
-    metadata: "Web-App • SaaS • Jun 2024 - Nov 2024",
-    description: "AI-powered LinkedIn marketing automation platform which was helped sales teams and founders to have a good distribution on LinkedIn and crack more leads",
-    impact: [
-      "Designed product from 0 to 1 serving 20+ active users",
-      "Built mini design system reducing design-to-dev handoff time by 40%",
-      "Contributed to 3x growth in user engagement during tenure",
-    ],
-    images: [
-      "/intro/hyperly/1.png",
-      "/intro/hyperly/2.png",
-      "/intro/hyperly/3.png",
-      "/intro/hyperly/4.png",
-      "/intro/hyperly/5.png",
-      "/intro/hyperly/6.png",
-      "/intro/hyperly/7.png",
-    ],
-  },
-  {
-    id: "vestorgrow",
-    title: "VestorGrow",
-    metadata: "Web-App • Social Media • Mar 2024 - Jun 2024",
-    description: "Social Media platform for personal growth focusing on Personal Finance, Mental Health and Career Growth",
-    impact: [
-      "Designed social media profile page focusing on skills and works of the users",
-      "Created scalable component library for rapid feature development",
-    ],
-    images: [
-      "/intro/vestorgrow/1.png",
-      "/intro/vestorgrow/2.png",
-      "/intro/vestorgrow/3.png",
-      "/intro/vestorgrow/4.png",
-      "/intro/vestorgrow/5.png",
-    ],
-  },
-];
-
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isUxViewerOpen, setIsUxViewerOpen] = useState(false);
   const [isOffScreenViewerOpen, setIsOffScreenViewerOpen] = useState(false);
-  const [isCaseStudyOpen, setIsCaseStudyOpen] = useState(false);
-  const [isCompanyCaseStudyOpen, setIsCompanyCaseStudyOpen] = useState(false);
   const [currentUxImageIndex, setCurrentUxImageIndex] = useState(0);
   const [currentOffScreenImageIndex, setCurrentOffScreenImageIndex] = useState(0);
-  const [currentCaseStudyIndex, setCurrentCaseStudyIndex] = useState(0);
-  const [currentCompanyCaseStudyIndex, setCurrentCompanyCaseStudyIndex] = useState(0);
   const [showAllWorks, setShowAllWorks] = useState(false);
 
   // Trigger animations after component mounts to prevent flash of content
@@ -342,8 +136,6 @@ export default function Home() {
       setIsModalOpen(false);
       setIsUxViewerOpen(false);
       setIsOffScreenViewerOpen(false);
-      setIsCaseStudyOpen(false);
-      setIsCompanyCaseStudyOpen(false);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -352,13 +144,13 @@ export default function Home() {
 
   // Push history state when any modal opens
   useEffect(() => {
-    const isAnyModalOpen = isModalOpen || isUxViewerOpen || isOffScreenViewerOpen || isCaseStudyOpen || isCompanyCaseStudyOpen;
+    const isAnyModalOpen = isModalOpen || isUxViewerOpen || isOffScreenViewerOpen;
 
     if (isAnyModalOpen) {
       closedViaBackRef.current = false;
       window.history.pushState({ modal: true }, '');
     }
-  }, [isModalOpen, isUxViewerOpen, isOffScreenViewerOpen, isCaseStudyOpen, isCompanyCaseStudyOpen]);
+  }, [isModalOpen, isUxViewerOpen, isOffScreenViewerOpen]);
 
   // Close handlers that also handle history
   const closeModal = useCallback(() => {
@@ -376,16 +168,6 @@ export default function Home() {
     if (!closedViaBackRef.current) window.history.back();
   }, []);
 
-  const closeCaseStudy = useCallback(() => {
-    setIsCaseStudyOpen(false);
-    if (!closedViaBackRef.current) window.history.back();
-  }, []);
-
-  const closeCompanyCaseStudy = useCallback(() => {
-    setIsCompanyCaseStudyOpen(false);
-    if (!closedViaBackRef.current) window.history.back();
-  }, []);
-
   const handleUxImageClick = (index: number) => {
     setCurrentUxImageIndex(index);
     setIsUxViewerOpen(true);
@@ -394,19 +176,6 @@ export default function Home() {
   const handleOffScreenImageClick = (index: number) => {
     setCurrentOffScreenImageIndex(index);
     setIsOffScreenViewerOpen(true);
-  };
-
-  const handleCaseStudyClick = (index: number) => {
-    setCurrentCaseStudyIndex(index);
-    setIsCaseStudyOpen(true);
-  };
-
-  const handleCompanyCaseStudy = (id: string) => {
-    const index = companyCaseStudies.findIndex(cs => cs.id === id);
-    if (index !== -1) {
-      setCurrentCompanyCaseStudyIndex(index);
-      setIsCompanyCaseStudyOpen(true);
-    }
   };
 
   const visibleBlogs = blogsData;
@@ -593,9 +362,9 @@ export default function Home() {
                 SocialSonar
               </button>
               , prev. at{' '}
-              <button
-                onClick={() => handleCompanyCaseStudy('hyperly')}
-                className="inline-flex items-center gap-1 text-[#7a7a7a] hover:text-white underline underline-offset-4 group align-middle cursor-pointer"
+              <Link
+                href="/intro/hyperly"
+                className="inline-flex items-center gap-1 text-[#7a7a7a] hover:text-white underline underline-offset-4 group align-middle"
               >
                 <Image
                   src="/logos/hyperly.png"
@@ -605,11 +374,11 @@ export default function Home() {
                   className="rounded-sm grayscale group-hover:grayscale-0"
                 />
                 Hyperly
-              </button>{' '}
+              </Link>{' '}
               and{' '}
-              <button
-                onClick={() => handleCompanyCaseStudy('vestorgrow')}
-                className="inline-flex items-center gap-1 text-[#7a7a7a] hover:text-white group underline underline-offset-4 align-middle cursor-pointer"
+              <Link
+                href="/intro/vestorgrow"
+                className="inline-flex items-center gap-1 text-[#7a7a7a] hover:text-white group underline underline-offset-4 align-middle"
               >
                 <Image
                   src="/logos/vestorgrow.png"
@@ -619,7 +388,7 @@ export default function Home() {
                   className="rounded-sm grayscale group-hover:grayscale-0"
                 />
                 VestorGrow
-              </button>
+              </Link>
             </p>
           </div>
         </section>
@@ -639,10 +408,10 @@ export default function Home() {
           {/* Project Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
             {(showAllWorks ? caseStudiesData : caseStudiesData.slice(0, 4)).map((caseStudy, index) => (
-              <div
+              <Link
                 key={caseStudy.id}
-                onClick={() => handleCaseStudyClick(index)}
-                className={`cursor-pointer group ${index >= 4 ? `work-item work-item-delay-${index - 3}` : ''}`}
+                href={`/works/${caseStudy.id}`}
+                className={`group ${index >= 4 ? `work-item work-item-delay-${index - 3}` : ''}`}
                 style={index >= 4 ? { opacity: 0 } : undefined}
               >
                 <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-3">
@@ -659,7 +428,7 @@ export default function Home() {
                 <h4 className="text-lg font-regular text-white mb-1 group-hover:underline underline-offset-2">
                   {caseStudy.title}
                 </h4>
-              </div>
+              </Link>
             ))}
           </div>
 
@@ -1036,25 +805,6 @@ export default function Home() {
         onClose={closeOffScreenViewer}
         onNavigate={setCurrentOffScreenImageIndex}
         useCenteredView={true}
-      />
-
-      {/* Case Study Viewer */}
-      <CaseStudyViewer
-        caseStudies={caseStudiesData}
-        currentIndex={currentCaseStudyIndex}
-        isOpen={isCaseStudyOpen}
-        onClose={closeCaseStudy}
-        onNavigate={setCurrentCaseStudyIndex}
-      />
-
-      {/* Company Case Study Viewer (Hyperly, VestorGrow) */}
-      <CaseStudyViewer
-        caseStudies={companyCaseStudies}
-        currentIndex={currentCompanyCaseStudyIndex}
-        isOpen={isCompanyCaseStudyOpen}
-        onClose={closeCompanyCaseStudy}
-        onNavigate={setCurrentCompanyCaseStudyIndex}
-        showNavigation={false}
       />
 
       {/* Modal for SocialSonar */}

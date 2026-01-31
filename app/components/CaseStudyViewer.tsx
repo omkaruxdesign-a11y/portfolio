@@ -212,7 +212,7 @@ export default function CaseStudyViewer({
         {/* Centered Container for Header and Images */}
         <div key={currentIndex} className="max-w-[900px] mx-auto px-4 md:px-6 relative case-study-transition">
           {/* Header Section with Close Button */}
-          <header className="px-2 pt-2 md:pt-4 pb-4 md:pb-6 flex items-start bg-black/80 backdrop-blur-3xl justify-between gap-4 sticky top-0 z-3 animate-blur-fade-in">
+          <header className="px-2 pt-2 md:pt-4 pb-4 md:pb-6 flex items-start bg-black/80 backdrop-blur-3xl justify-between gap-4 sticky top-0 z-3 animate-blur-fade-in group/parent">
             <div className="flex-1">
               {/* Title and Metadata */}
               <h1 className="text-2xl md:text-3xl font-bold text-white mb-1">
@@ -228,7 +228,7 @@ export default function CaseStudyViewer({
                   <h2 className="text-sm font-mono uppercase tracking-wider text-white mb-2">
                     DESCRIPTION
                   </h2>
-                  <p className="text-base text-[#A1A1A1] leading-relaxed">
+                  <p className="text-base text-[#7a7a7a] leading-relaxed">
                     {currentStudy.description}
                   </p>
                 </div>
@@ -239,15 +239,15 @@ export default function CaseStudyViewer({
                 <div>
                   <button
                     onClick={() => setIsImpactExpanded(!isImpactExpanded)}
-                    className="w-full flex items-center justify-between py-2 cursor-pointer group"
+                    className="w-full flex items-center justify-between py-2 cursor-pointer group/collapse"
                   >
-                    <h2 className="text-sm font-mono uppercase tracking-wider text-white">
+                    <h2 className="text-sm font-mono uppercase group-hover/collapse:underline underline-offset-4 tracking-wider text-white">
                       {currentStudy.metadata.includes('Concept') || currentStudy.metadata.includes('Personal') ? 'LEARNINGS' : 'IMPACT'}
                     </h2>
                     <Plus
                       size={16}
                       weight="bold"
-                      className={`text-white/70 group-hover:text-white transition-transform duration-300 ${isImpactExpanded ? 'rotate-45' : ''}`}
+                      className={`text-white/70 group-hover/collapse:text-white transition-transform duration-300 ${isImpactExpanded ? 'rotate-45' : ''}`}
                     />
                   </button>
                   <div
@@ -257,7 +257,7 @@ export default function CaseStudyViewer({
                   >
                     <ul className="space-y-1 pt-2">
                       {currentStudy.impact.map((item, index) => (
-                        <li key={index} className="text-base text-[#A1A1A1] leading-relaxed flex">
+                        <li key={index} className="text-base text-[#7a7a7a] leading-relaxed flex">
                           <span className="mr-3">•</span>
                           <span>{item}</span>
                         </li>
@@ -271,7 +271,7 @@ export default function CaseStudyViewer({
             {/* Close Button - Inline with header */}
             <button
               onClick={onClose}
-              className="flex-shrink-0 text-white/70 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center"
+              className="flex-shrink-0 text-white/70 opacity-0 group-hover/parent:opacity-100 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-transform animate:fade-in flex items-center justify-center"
               aria-label="Close case study viewer"
             >
               <X size={16} weight="regular" />

@@ -1,6 +1,8 @@
 export interface CaseStudy {
   id: string;
   title: string;
+  subtext: string;
+  isNDA: boolean;
   metadata: string;
   description?: string;
   impact?: string[];
@@ -12,6 +14,8 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "opinex",
     title: "Opinex - Fantasy Sports",
+    subtext: "Built MVP allowing stakeholders to test and validate",
+    isNDA: true,
     metadata: "Work • App • Feb 2025",
     description: "A fantasy sports platform for opinion trading for local events",
     impact: [
@@ -31,6 +35,8 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "nothing",
     title: "Essential Suggestions",
+    subtext: "Designed a personalized suggestion app for close friends",
+    isNDA: false,
     metadata: "Concept • App-Widget • 2025",
     description: "This was my submission for Nothing's Community submissions where community submits their ideas of app-widgets and Nothing then chooses one and works with that person. It was quite an experience, worked on something different than usual phone/web things.",
     impact: [
@@ -58,6 +64,8 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "micro-ott",
     title: "Micro OTT Platform",
+    subtext: "MVP of regional micro-ott platform allowing stakeholders to validate the product",
+    isNDA: true,
     metadata: "App • Entertainment • Sept 2025",
     description: "A micro-OTT platform which has vertically shot content which has bite sized video content.",
     impact: [
@@ -74,8 +82,10 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "mshps",
     title: "MSHPS - Police Housing Corp. ",
+    subtext: "Reduced time of task completion involving billing and finances by 50%",
+    isNDA: true,
     metadata: "Web-App • Gov-Tech • Jan 2025",
-    description: "This was a proposal kind-of design for a government organization which takes care of all the finances related to the police department",
+    description: "This was a proposal design for a government organization which takes care of all the finances related to the police department",
     impact: [
       "Simplified 12-step financial workflow to 5 steps for 1000+ employees",
       "Proposed design reducing average task completion time by 50%",
@@ -93,6 +103,8 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "futura",
     title: "Futura",
+    subtext: "Explored spatial UI patterns for immersive environments",
+    isNDA: false,
     metadata: "Concept • AR/VR • Jan 2025",
     description: "This was a random problem statement I took on to explore what all can I do with my creative thinking",
     impact: [
@@ -116,6 +128,8 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "airbook",
     title: "Airbook UX Audit",
+    subtext: "Audited analytics platform identifying critical UX issues",
+    isNDA: false,
     metadata: "Web-App • SaaS • Feb 2025",
     description: "Currently its, The AI-powered analytics workspace where teams bring all their data in one place, explore what's driving revenue, and act on it. Back then Audited their platform for any UX issues",
     impact: [
@@ -143,6 +157,8 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "intro-design",
     title: "Introduction to Design",
+    subtext: "Delivered design session to engineering students",
+    isNDA: false,
     metadata: "Personal • Presentation • Oct 2025",
     description: "This was when my professors from the college asked me to deliver a session on Design. Made this deck to help students understand what design in tech world really is. Hope I helped someone find their interest!",
     impact: [
@@ -175,6 +191,8 @@ export const companyCaseStudies: CaseStudy[] = [
   {
     id: "hyperly",
     title: "Hyperly",
+    subtext: "AI-powered LinkedIn marketing automation platform",
+    isNDA: false,
     metadata: "Web-App • SaaS • Jun 2024 - Nov 2024",
     description: "AI-powered LinkedIn marketing automation platform which was helped sales teams and founders to have a good distribution on LinkedIn and crack more leads",
     impact: [
@@ -195,6 +213,8 @@ export const companyCaseStudies: CaseStudy[] = [
   {
     id: "vestorgrow",
     title: "VestorGrow",
+    subtext: "Social media platform for personal growth",
+    isNDA: false,
     metadata: "Web-App • Social Media • Mar 2024 - Jun 2024",
     description: "Social Media platform for personal growth focusing on Personal Finance, Mental Health and Career Growth",
     impact: [

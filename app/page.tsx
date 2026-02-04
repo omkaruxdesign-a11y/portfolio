@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ArrowUpRight, X, Plus, ArrowUpRightIcon } from "@phosphor-icons/react";
+import { ArrowUpRight, X, Plus, ArrowUpRightIcon, Lock } from "@phosphor-icons/react";
 import ImageSlider, { SliderImage } from "./components/ImageSlider";
 import ImageViewer, { ViewerImage } from "./components/ImageViewer";
 import AutoScrollSlider, { AutoScrollImage } from "./components/AutoScrollSlider";
@@ -414,7 +414,7 @@ export default function Home() {
                 className={`group ${index >= 4 ? `work-item work-item-delay-${index - 3}` : ''}`}
                 style={index >= 4 ? { opacity: 0 } : undefined}
               >
-                <div className="relative w-full aspect-video rounded-lg overflow-hidden mb-3">
+                <div className="relative w-full aspect-video rounded-lg overflow-hidden">
                   <Image
                     src={caseStudy.thumbnail || caseStudy.images[0]}
                     alt={caseStudy.title}
@@ -425,9 +425,28 @@ export default function Home() {
                     priority={index < 2}
                   />
                 </div>
-                <h4 className="text-lg font-regular text-white mb-1 group-hover:underline underline-offset-2">
-                  {caseStudy.title}
-                </h4>
+                <div className="mt-2">
+                  <div className="flex items-center justify-between gap-1 mb-1">
+                    <h4 className="text-white text-lg font-medium group-hover:underline underline-offset-2">
+                      {caseStudy.title}
+                    </h4>
+                    {caseStudy.isNDA && (
+                      <div className="relative flex-shrink-0 group/lock">
+                        <Lock
+                          size={16}
+                          weight="regular"
+                          className="text-[#7a7a7a] hover:text-white cursor-pointer"
+                        />
+                        <span className="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-[#a1a1a1] bg-[#1a1a1a] border border-[#2a2a2a] rounded whitespace-nowrap opacity-0 group-hover/lock:opacity-100 transition-opacity ">
+                          Under NDA
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-[#7a7a7a] group-hover:text-[#9d9d9d] text-sm ">
+                    {caseStudy.subtext}
+                  </p>
+                </div>
               </Link>
             ))}
           </div>

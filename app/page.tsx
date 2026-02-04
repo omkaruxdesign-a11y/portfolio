@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { ArrowUpRight, X, Plus, ArrowUpRightIcon, Lock } from "@phosphor-icons/react";
+import { ArrowUpRight, X, Plus, ArrowUpRightIcon, Lock, Quotes } from "@phosphor-icons/react";
 import ImageSlider, { SliderImage } from "./components/ImageSlider";
 import ImageViewer, { ViewerImage } from "./components/ImageViewer";
 import AutoScrollSlider, { AutoScrollImage } from "./components/AutoScrollSlider";
@@ -119,6 +119,7 @@ export default function Home() {
   const [currentUxImageIndex, setCurrentUxImageIndex] = useState(0);
   const [currentOffScreenImageIndex, setCurrentOffScreenImageIndex] = useState(0);
   const [showAllWorks, setShowAllWorks] = useState(false);
+  const [showMovieTooltip, setShowMovieTooltip] = useState(false);
 
   // Trigger animations after component mounts to prevent flash of content
   useEffect(() => {
@@ -759,7 +760,7 @@ export default function Home() {
           </AnimateOnScroll>
 
           {/* Intro Text */}
-          <AnimateOnScroll className="text-lg text-[#7a7a7a] leading-relaxed space-y-4">
+          <AnimateOnScroll className="text-lg text-[#7a7a7a] leading-relaxed space-y-4 relative z-[9999]">
             <p>
               Well, when I am not around – I am busy saving Gotham. I AM BATMAN... Just kidding :)
             </p>
@@ -776,13 +777,60 @@ export default function Home() {
               {' '}. Not for any output, just for personal documentation. I love OBSERVING{' '}
               <span className="text-white font-regular ">films</span>
               {' '}and noticing the small details in it. {' '} 
-              <a
-                href="https://www.imdb.com/title/tt0359950/" 
-                className="text-white font-regular underline underline-offset-4 transition-opacity cursor-pointer hover:opacity-80"
+              <span
+                className="relative inline-block"
+                onMouseEnter={() => setShowMovieTooltip(true)}
+                onMouseLeave={() => setShowMovieTooltip(false)}
+              >
+                <a
+                  className="text-white font-medium underline underline-offset-4 cursor-pointer"
+                  href="https://www.imdb.com/title/tt0359950/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  role="button"
+                  tabIndex={0}
+                  aria-describedby="movie-tooltip"
+                  onFocus={() => setShowMovieTooltip(true)}
+                  onBlur={() => setShowMovieTooltip(false)}
                 >
                   The Secret Life of Walter Mitty
-                
-                </a> {' '} is something that I can watch anytime. 
+                </a>
+                {showMovieTooltip && (
+                  <div
+                    id="movie-tooltip"
+                    role="tooltip"
+                    aria-label="Movie quote tooltip"
+                    className="absolute left-0 translate-x-1/4 top-full mt-2 z-[9999] w-96 sm:w-[480px] bg-[#1a1a1a] rounded-lg shadow-2xl border border-[#1c1c1c] p-2 animate-tooltip"
+                  >
+                    <div className="flex gap-4">
+                      {/* Movie Poster */}
+                      <div className="flex-shrink-0">
+                        <Image
+                          src="/offscreen/movie.jpg"
+                          alt="The Secret Life of Walter Mitty movie poster"
+                          width={80}
+                          height={120}
+                          className="rounded object-cover"
+                        />
+                      </div>
+
+                      {/* Quote Content */}
+                      <div className="flex-1">
+                        <Quotes
+                          size={32}
+                          weight="fill"
+                          className="text-white mb-2"
+                        />
+                        <p className="text-white text-base font-extralight italic">
+                          To see the world, things dangerous to come to, to see behind walls, draw closer, to find each other and to feel. That is the purpose of life.
+                        </p>
+                      </div>
+                    </div>
+
+                                      </div>
+                )}
+              </span>
+              {' '}is something that I can watch anytime. 
             </p>
             <p>
               Would love to build something more human in the {' '}

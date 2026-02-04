@@ -427,7 +427,7 @@ export default function Home() {
                   />
                 </div>
                 <div className="mt-2">
-                  <div className="flex items-center justify-between gap-1 mb-1">
+                  <div className="flex items-center justify-between gap-1 ">
                     <h4 className="text-white text-lg font-medium group-hover:underline underline-offset-2">
                       {caseStudy.title}
                     </h4>
@@ -783,7 +783,7 @@ export default function Home() {
                 onMouseLeave={() => setShowMovieTooltip(false)}
               >
                 <a
-                  className="text-white font-medium underline underline-offset-4 cursor-pointer"
+                  className="text-white font-regular underline underline-offset-4 cursor-pointer"
                   href="https://www.imdb.com/title/tt0359950/"
                   target="_blank"
                   rel="noopener noreferrer"
@@ -800,7 +800,7 @@ export default function Home() {
                     id="movie-tooltip"
                     role="tooltip"
                     aria-label="Movie quote tooltip"
-                    className="absolute left-0 translate-x-1/4 top-full mt-2 z-[9999] w-96 sm:w-[480px] bg-[#1a1a1a] rounded-lg shadow-2xl border border-[#1c1c1c] p-2 animate-tooltip"
+                    className="absolute left-0 translate-x-1/4 top-full mt-2 z-[9999] w-100 sm:w-[500px] bg-[#1a1a1a] rounded-lg shadow-2xl border border-[#1c1c1c] p-2 animate-tooltip"
                   >
                     <div className="flex gap-4">
                       {/* Movie Poster */}

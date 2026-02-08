@@ -760,7 +760,7 @@ export default function Home() {
           </AnimateOnScroll>
 
           {/* Intro Text */}
-          <AnimateOnScroll className="text-lg text-[#7a7a7a] leading-relaxed space-y-4 relative z-[9999]">
+          <AnimateOnScroll className="text-lg text-[#7a7a7a] leading-relaxed space-y-4 relative z-[9]">
             <p>
               Well, when I am not around – I am busy saving Gotham. I AM BATMAN... Just kidding :)
             </p>
@@ -800,7 +800,7 @@ export default function Home() {
                     id="movie-tooltip"
                     role="tooltip"
                     aria-label="Movie quote tooltip"
-                    className="absolute left-0 translate-x-1/4 top-full mt-2 z-[9999] w-100 sm:w-[500px] bg-[#1a1a1a] rounded-lg shadow-2xl border border-[#1c1c1c] p-2 animate-tooltip"
+                    className="absolute -left-32 translate-x-1/64 top-full mt-2 z-[9999] w-100 sm:w-[500px] bg-[#1a1a1a] rounded-lg shadow-2xl border border-[#1c1c1c] p-2 animate-tooltip"
                   >
                     <div className="flex gap-4">
                       {/* Movie Poster */}
@@ -827,7 +827,7 @@ export default function Home() {
                       </div>
                     </div>
 
-                                      </div>
+                </div>
                 )}
               </span>
               {' '}is something that I can watch anytime. 

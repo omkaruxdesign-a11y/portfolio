@@ -226,7 +226,7 @@ export default function CaseStudyViewer({
               {/* Close Button - Grouped with title */}
               <button
                 onClick={onClose}
-                className="flex-shrink-0 text-white/70 opacity-0 group-hover/title:opacity-100 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-opacity flex items-center justify-center"
+                className="flex-shrink-0 text-white/70 opacity-0 sm:opacity-100 group-hover/title:opacity-100 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-opacity flex items-center justify-center"
                 aria-label="Close case study viewer"
               >
                 <X size={16} weight="regular" />

@@ -235,6 +235,7 @@ export default function Home() {
         .animate-delay-1 { animation-delay: 0s; }
         .animate-delay-2 { animation-delay: 0.1s; }
         .animate-delay-3 { animation-delay: 0.2s; }
+        .animate-delay-4 { animation-delay: 0.3s; }
 
         /* Scroll-triggered animation - starts hidden */
         .animate-on-scroll {
@@ -542,16 +543,16 @@ export default function Home() {
         </section>
 
         {/* CASE STUDIES Section */}
-        <section className="space-y-6 mt-20">
+        <section className={`space-y-6 mt-20 ${isLoaded ? 'animate-blur-fade-in animate-delay-4' : 'opacity-0'}`}>
           {/* Section Heading */}
-          <AnimateOnScroll  className="text-base font-mono uppercase tracking-wider text-white">
+          <h3 className="text-base font-mono uppercase tracking-wider text-white">
             CASE STUDIES
-          </AnimateOnScroll>
+          </h3>
 
           {/* Description */}
-          <AnimateOnScroll className="text-lg text-[#7a7a7a]">
+          <p className="text-lg text-[#7a7a7a]">
             Deep dives into the products I built and launched...
-          </AnimateOnScroll>
+          </p>
 
           {/* Project Cards Grid */}
           <div
@@ -563,8 +564,8 @@ export default function Home() {
                 .filter((block): block is { type: "image"; src: string; alt: string } => block.type === "image")
                 .map((block) => block.src);
               return (
-                <AnimateOnScroll key={study.id} delay={index * 100}>
                   <button
+                    key={study.id}
                     onClick={() => setActiveBlogCaseStudy(study)}
                     onMouseEnter={() => {
                       setHoveredCaseStudyId(study.id);
@@ -595,7 +596,6 @@ export default function Home() {
                       </p>
                     </div>
                   </button>
-                </AnimateOnScroll>
               );
             })}
           </div>

@@ -129,9 +129,16 @@ export default function Home() {
   const [hoveredWorkId, setHoveredWorkId] = useState<string | null>(null);
   const [hoveredCaseStudyId, setHoveredCaseStudyId] = useState<string | null>(null);
 
+  const [isMobile, setIsMobile] = useState(false);
+
   // Trigger animations after component mounts to prevent flash of content
   useEffect(() => {
     setIsLoaded(true);
+    const mq = window.matchMedia('(max-width: 768px)');
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener('change', handler);
+    return () => mq.removeEventListener('change', handler);
   }, []);
 
   // Track if modal was closed via back button to avoid double history.back()
@@ -557,7 +564,7 @@ export default function Home() {
           {/* Project Cards Grid */}
           <div
             className="grid grid-cols-1 md:grid-cols-2 gap-3"
-            onMouseLeave={() => setHoveredCaseStudyId(null)}
+            onMouseLeave={() => !isMobile && setHoveredCaseStudyId(null)}
           >
             {blogCaseStudies.map((study, index) => {
               const studyImages = study.content
@@ -568,14 +575,16 @@ export default function Home() {
                     key={study.id}
                     onClick={() => setActiveBlogCaseStudy(study)}
                     onMouseEnter={() => {
+                      if (isMobile) return;
                       setHoveredCaseStudyId(study.id);
                       setHoveredCaseStudyImages(studyImages);
                       setIsCursorPreviewVisible(true);
                     }}
                     onMouseLeave={() => {
+                      if (isMobile) return;
                       setIsCursorPreviewVisible(false);
                     }}
-                    className={`group text-left w-full cursor-pointer transition-all duration-300 ${hoveredCaseStudyId && hoveredCaseStudyId !== study.id ? 'blur-[2px] opacity-50' : ''}`}
+                    className={`group text-left w-full cursor-pointer transition-all duration-300 ${!isMobile && hoveredCaseStudyId && hoveredCaseStudyId !== study.id ? 'blur-[2px] opacity-50' : ''}`}
                   >
                     <div className="relative w-full aspect-video rounded-lg overflow-hidden">
                       <Image
@@ -616,20 +625,22 @@ export default function Home() {
           {/* Project Grid */}
           <div
             className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4"
-            onMouseLeave={() => setHoveredWorkId(null)}
+            onMouseLeave={() => !isMobile && setHoveredWorkId(null)}
           >
             {(showAllWorks ? caseStudiesData : caseStudiesData.slice(0, 4)).map((caseStudy, index) => (
               <Link
                 key={caseStudy.id}
                 href={`/works/${caseStudy.id}`}
-                className={`group transition-all duration-300 ${index >= 4 ? `work-item work-item-delay-${index - 3}` : ''} ${hoveredWorkId && hoveredWorkId !== caseStudy.id ? 'blur-[2px] opacity-50' : ''}`}
+                className={`group transition-all duration-300 ${index >= 4 ? `work-item work-item-delay-${index - 3}` : ''} ${!isMobile && hoveredWorkId && hoveredWorkId !== caseStudy.id ? 'blur-[2px] opacity-50' : ''}`}
                 style={index >= 4 ? { opacity: 0 } : undefined}
                 onMouseEnter={() => {
+                  if (isMobile) return;
                   setHoveredWorkId(caseStudy.id);
                   setHoveredCaseStudyImages(caseStudy.images.slice(0, 5));
                   setIsCursorPreviewVisible(true);
                 }}
                 onMouseLeave={() => {
+                  if (isMobile) return;
                   setIsCursorPreviewVisible(false);
                 }}
               >
@@ -982,11 +993,13 @@ export default function Home() {
         />
       )}
 
-      {/* Cursor Slideshow Preview */}
-      <CursorSlideshow
-        images={hoveredCaseStudyImages}
-        isVisible={isCursorPreviewVisible}
-      />
+      {/* Cursor Slideshow Preview - desktop only */}
+      {!isMobile && (
+        <CursorSlideshow
+          images={hoveredCaseStudyImages}
+          isVisible={isCursorPreviewVisible}
+        />
+      )}
 
       {/* Modal for SocialSonar */}
       {isModalOpen && (

@@ -129,7 +129,7 @@ export default function AutoScrollSlider({ images, onImageClick }: AutoScrollSli
                 className="object-cover pointer-events-none"
                 draggable={false}
                 sizes="(max-width: 768px) 200px, 150px"
-                quality={80}
+                quality={100}
               />
             </div>
           </div>

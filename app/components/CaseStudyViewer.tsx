@@ -34,13 +34,39 @@ export default function CaseStudyViewer({
   const contentRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const [isImpactExpanded, setIsImpactExpanded] = useState(false);
+  const lastScrollY = useRef(0);
+  const [isHeaderHidden, setIsHeaderHidden] = useState(false);
 
   const currentStudy = caseStudies[currentIndex];
 
-  // Reset expanded state when changing case study
-  useEffect(() => {
+  // Reset expanded/header state when changing case study
+  const [prevIndex, setPrevIndex] = useState(currentIndex);
+  if (prevIndex !== currentIndex) {
+    setPrevIndex(currentIndex);
     setIsImpactExpanded(false);
-  }, [currentIndex]);
+    setIsHeaderHidden(false);
+  }
+
+  // Hide header on scroll down, show on scroll up (mobile)
+  useEffect(() => {
+    const scrollEl = contentRef.current;
+    if (!scrollEl || !isOpen) return;
+
+    lastScrollY.current = 0;
+
+    const handleScroll = () => {
+      const y = scrollEl.scrollTop;
+      if (y > lastScrollY.current && y > 50) {
+        setIsHeaderHidden(true);
+      } else if (y < lastScrollY.current) {
+        setIsHeaderHidden(false);
+      }
+      lastScrollY.current = y;
+    };
+
+    scrollEl.addEventListener('scroll', handleScroll, { passive: true });
+    return () => scrollEl.removeEventListener('scroll', handleScroll);
+  }, [isOpen]);
 
   // Touch/swipe handling
   const touchStartX = useRef<number | null>(null);
@@ -198,6 +224,15 @@ export default function CaseStudyViewer({
         </button>
       )}
 
+      {/* Mobile fixed close button - always visible */}
+      <button
+        onClick={onClose}
+        className="fixed top-4 right-4 z-[60] sm:hidden text-white/70 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-opacity flex items-center justify-center"
+        aria-label="Close case study viewer"
+      >
+        <X size={16} weight="regular" />
+      </button>
+
       {/* Scrollable Content Area */}
       <div
         ref={contentRef}
@@ -212,7 +247,7 @@ export default function CaseStudyViewer({
         {/* Centered Container for Header and Images */}
         <div key={currentIndex} className="max-w-[900px] mx-auto px-4 md:px-6 relative case-study-transition">
           {/* Header Section with Close Button */}
-          <header className="px-2 pt-2 md:pt-4 pb-4 md:pb-6 bg-black/80 backdrop-blur-3xl sticky top-0 z-3 animate-blur-fade-in group/title">
+          <header className={`px-2 pt-2 md:pt-4 pb-4 md:pb-6 bg-black/80 backdrop-blur-3xl sticky top-0 z-3 animate-blur-fade-in group/title transition-transform duration-300 ${isHeaderHidden ? '-translate-y-full md:translate-y-0' : 'translate-y-0'}`}>
             {/* Title, Metadata and Close Button - Grouped */}
             <div className="flex items-start justify-between gap-4 ">
               <div>
@@ -223,10 +258,10 @@ export default function CaseStudyViewer({
                   {currentStudy.metadata}
                 </p>
               </div>
-              {/* Close Button - Grouped with title */}
+              {/* Close Button - Desktop only, grouped with title */}
               <button
                 onClick={onClose}
-                className="flex-shrink-0 text-white/70 opacity-0 sm:opacity-100 group-hover/title:opacity-100 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-opacity flex items-center justify-center"
+                className="hidden sm:flex flex-shrink-0 text-white/70 group-hover/title:opacity-100 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-opacity items-center justify-center"
                 aria-label="Close case study viewer"
               >
                 <X size={16} weight="regular" />
@@ -299,7 +334,7 @@ export default function CaseStudyViewer({
                   loading={index < 2 ? 'eager' : 'lazy'}
                   priority={index === 0}
                   sizes="(max-width: 900px) 90vw, 900px"
-                  quality={85}
+                  quality={100}
                 />
               </div>
             ))}

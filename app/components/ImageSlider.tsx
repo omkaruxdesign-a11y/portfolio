@@ -84,7 +84,7 @@ export default function ImageSlider({ images, onImageClick }: ImageSliderProps) 
                 fill
                 className="object-cover"
                 sizes="280px"
-                quality={80}
+                quality={100}
               />
               {/* App Icon Overlay
               <div className="absolute bottom-2 left-2">

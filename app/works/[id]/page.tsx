@@ -115,7 +115,7 @@ export default async function WorksPage({ params }: Props) {
                 loading={index < 2 ? 'eager' : 'lazy'}
                 priority={index === 0}
                 sizes="(max-width: 900px) 90vw, 900px"
-                quality={85}
+                quality={100}
               />
             </div>
           ))}

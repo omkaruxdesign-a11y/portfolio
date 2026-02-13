@@ -8,7 +8,10 @@ import ImageSlider, { SliderImage } from "./components/ImageSlider";
 import ImageViewer, { ViewerImage } from "./components/ImageViewer";
 import AutoScrollSlider, { AutoScrollImage } from "./components/AutoScrollSlider";
 import BlogCard from "./components/BlogCard";
+import CaseStudyBlogViewer from "./components/CaseStudyBlogViewer";
+import CursorSlideshow from "./components/CursorSlideshow";
 import { caseStudiesData } from "./data/caseStudies";
+import { blogCaseStudies, type BlogCaseStudy } from "./data/blogCaseStudies";
 
 // Reusable animated wrapper component for scroll-triggered animations
 function AnimateOnScroll({
@@ -120,6 +123,11 @@ export default function Home() {
   const [currentOffScreenImageIndex, setCurrentOffScreenImageIndex] = useState(0);
   const [showAllWorks, setShowAllWorks] = useState(false);
   const [showMovieTooltip, setShowMovieTooltip] = useState(false);
+  const [activeBlogCaseStudy, setActiveBlogCaseStudy] = useState<BlogCaseStudy | null>(null);
+  const [hoveredCaseStudyImages, setHoveredCaseStudyImages] = useState<string[]>([]);
+  const [isCursorPreviewVisible, setIsCursorPreviewVisible] = useState(false);
+  const [hoveredWorkId, setHoveredWorkId] = useState<string | null>(null);
+  const [hoveredCaseStudyId, setHoveredCaseStudyId] = useState<string | null>(null);
 
   // Trigger animations after component mounts to prevent flash of content
   useEffect(() => {
@@ -137,6 +145,7 @@ export default function Home() {
       setIsModalOpen(false);
       setIsUxViewerOpen(false);
       setIsOffScreenViewerOpen(false);
+      setActiveBlogCaseStudy(null);
     };
 
     window.addEventListener('popstate', handlePopState);
@@ -145,13 +154,13 @@ export default function Home() {
 
   // Push history state when any modal opens
   useEffect(() => {
-    const isAnyModalOpen = isModalOpen || isUxViewerOpen || isOffScreenViewerOpen;
+    const isAnyModalOpen = isModalOpen || isUxViewerOpen || isOffScreenViewerOpen || activeBlogCaseStudy !== null;
 
     if (isAnyModalOpen) {
       closedViaBackRef.current = false;
       window.history.pushState({ modal: true }, '');
     }
-  }, [isModalOpen, isUxViewerOpen, isOffScreenViewerOpen]);
+  }, [isModalOpen, isUxViewerOpen, isOffScreenViewerOpen, activeBlogCaseStudy]);
 
   // Close handlers that also handle history
   const closeModal = useCallback(() => {
@@ -166,6 +175,11 @@ export default function Home() {
 
   const closeOffScreenViewer = useCallback(() => {
     setIsOffScreenViewerOpen(false);
+    if (!closedViaBackRef.current) window.history.back();
+  }, []);
+
+  const closeBlogViewer = useCallback(() => {
+    setActiveBlogCaseStudy(null);
     if (!closedViaBackRef.current) window.history.back();
   }, []);
 
@@ -288,6 +302,20 @@ export default function Home() {
         .work-item-delay-5 { animation-delay: 200ms; }
         .work-item-delay-6 { animation-delay: 250ms; }
         .work-item-delay-7 { animation-delay: 300ms; }
+
+        /* Case study overlay animation */
+        @keyframes casestudyOverlayFadeIn {
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
+        }
+
+        .casestudy-overlay-fade-in {
+          animation: casestudyOverlayFadeIn 0.3s ease-out forwards;
+        }
       `}</style>
         {/* Hero Section */}
         <section className={`flex flex-col items-start gap-2 mb-20 ${isLoaded ? 'animate-blur-fade-in animate-delay-1' : 'opacity-0'}`}>
@@ -304,11 +332,11 @@ export default function Home() {
 
           {/* Heading Text */}
           <div className="text-start">
-            <h1 className="text-2xl leading-relaxed -mb-2">
+            <h1 className="text-2xl -mb-2">
               <span className="text-[#7a7a7a]">Hi, I am </span>
               <span className="text-white font-regular">Omkar</span>
             </h1>
-            <h2 className="text-2xl leading-relaxed mb-6">
+            <h2 className="text-2xl mb-6">
               <span className="text-[#7a7a7a]">and I love things that </span>
               <span className="text-white font-regular">add value to lives</span>
             </h2>
@@ -344,7 +372,7 @@ export default function Home() {
               >
                 2+ years
               </a>{' '}
-              now, started with freelancing and later focused on giving early stage start-ups an Headstart they need.
+              now, focused on giving early stage start-ups an Headstart they need. 
             </p>
 
             <p>
@@ -394,26 +422,216 @@ export default function Home() {
           </div>
         </section>
 
-        {/* WORKS Section */}
+        {/* CURRENTLY LEARNING Section */}
         <section className={`space-y-6 mt-20 ${isLoaded ? 'animate-blur-fade-in animate-delay-3' : 'opacity-0'}`}>
           {/* Section Heading */}
           <h3 className="text-base font-mono uppercase tracking-wider text-white">
-            WORKS
+            CURRENTLY LEARNING
           </h3>
 
+          {/* Intro Text */}
+          <div className="text-lg text-[#7a7a7a] leading-relaxed space-y-4">
+            <p>
+              <span className="text-white font-regular">Coding!</span> Yep, learning to code so that I can bring my small ideas to life and claim a small part off then internet as mine! These are mostly some problems I face and I build a solution to it withouth thinking much.
+            </p>
+            <p>
+              Built and launched 2 projects on{' '}
+              <a
+                href="https://peerlist.io/omkarux"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white font-regular underline underline-offset-4 hover:opacity-80 transition-opacity"
+              >
+                Peerlist
+              </a>
+            </p>
+          </div>
+
+          {/* Project Cards Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            {/* Card 1: Lentlay */}
+            <div className="bg-[#1a1a1a] rounded-xl gap-2 p-2 flex flex-col">
+              <div className="flex items-start gap-2">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                  <Image
+                    src="/currently learning/lentlay.png"
+                    alt="Lentlay logo"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-lg font-medium text-white">Lentlay</h4>
+                  <p className="text-sm text-[#7a7a7a]">Your Images made glassy</p>
+                </div>
+              </div>
+              <div className="min-h-[1px] w-full bg-[#363636]"></div>
+              <div className="flex justify-between items-center">
+                <a
+                  href="https://lentlay.framer.website"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex uppercase font-mono items-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white text-sm font-regular px-2 py-1 rounded-lg transition-colors group"
+                >
+                  Visit
+                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white" />
+                </a>
+                <a
+                  href="https://peerlist.io/omkarux/project/lentlay"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex p-1 items-center gap-1 hover:bg-[#009940] rounded-full transition-colors"
+                >
+                  <Image
+                    src="/logos/peerlist.png"
+                    alt="Peerlist"
+                    width={18}
+                    height={18}
+                    className="rounded-full"
+                  />
+                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white transition-colors" />
+                </a>
+              </div>
+            </div>
+
+            {/* Card 2: Secards */}
+            <div className="bg-[#1a1a1a] rounded-xl gap-2 p-2 flex flex-col">
+              <div className="flex items-start gap-2">
+                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
+                  <Image
+                    src="/currently learning/secards-sq.png"
+                    alt="Secards logo"
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+                <div className="w-full">
+                  <h4 className="text-lg font-medium text-white">Secards</h4>
+                  <p className="text-sm text-[#7a7a7a]">All of Secured cards in India</p>
+                </div>
+              </div>
+              <div className="min-h-[1px] w-full bg-[#363636]"></div>
+              <div className="flex justify-between items-center">
+                <a
+                  href="https://secards.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white text-sm font-regular font-mono uppercase px-2 py-1 rounded-lg transition-colors group"
+                >
+                  Visit
+                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white"/>
+                </a>
+                <a
+                  href="https://peerlist.io/omkarux/project/secards"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="group flex p-1 items-center gap-1 hover:bg-[#009940] rounded-full transition-colors"
+                >
+                  <Image
+                    src="/logos/peerlist.png"
+                    alt="Peerlist"
+                    width={18}
+                    height={18}
+                    className="rounded-full"
+                  />
+                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white" />
+                </a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CASE STUDIES Section */}
+        <section className="space-y-6 mt-20">
+          {/* Section Heading */}
+          <AnimateOnScroll  className="text-base font-mono uppercase tracking-wider text-white">
+            CASE STUDIES
+          </AnimateOnScroll>
+
           {/* Description */}
-          <p className="text-lg text-[#7a7a7a] leading-relaxed">
+          <AnimateOnScroll className="text-lg text-[#7a7a7a]">
+            Deep dives into the products I built and launched...
+          </AnimateOnScroll>
+
+          {/* Project Cards Grid */}
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-3"
+            onMouseLeave={() => setHoveredCaseStudyId(null)}
+          >
+            {blogCaseStudies.map((study, index) => {
+              const studyImages = study.content
+                .filter((block): block is { type: "image"; src: string; alt: string } => block.type === "image")
+                .map((block) => block.src);
+              return (
+                <AnimateOnScroll key={study.id} delay={index * 100}>
+                  <button
+                    onClick={() => setActiveBlogCaseStudy(study)}
+                    onMouseEnter={() => {
+                      setHoveredCaseStudyId(study.id);
+                      setHoveredCaseStudyImages(studyImages);
+                      setIsCursorPreviewVisible(true);
+                    }}
+                    onMouseLeave={() => {
+                      setIsCursorPreviewVisible(false);
+                    }}
+                    className={`group text-left w-full cursor-pointer transition-all duration-300 ${hoveredCaseStudyId && hoveredCaseStudyId !== study.id ? 'blur-[2px] opacity-50' : ''}`}
+                  >
+                    <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                      <Image
+                        src={study.thumbnail}
+                        alt={study.title}
+                        fill
+                        className="object-cover transition-all duration-300 group-hover:brightness-110"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        quality={100}
+                      />
+                    </div>
+                    <div className="mt-1">
+                      <h4 className="text-white text-lg font-medium group-hover:underline underline-offset-2">
+                        {study.title}
+                      </h4>
+                      <p className="text-[#7a7a7a] group-hover:text-[#9d9d9d] text-[14px]">
+                        {study.subtext}
+                      </p>
+                    </div>
+                  </button>
+                </AnimateOnScroll>
+              );
+            })}
+          </div>
+        </section>
+
+        {/* WORKS Section */}
+        <section className="space-y-6 mt-20">
+          {/* Section Heading */}
+          <AnimateOnScroll as="h3" className="text-base font-mono uppercase tracking-wider text-white">
+            WORKS
+          </AnimateOnScroll>
+
+          {/* Description */}
+          <AnimateOnScroll as="p" className="text-lg text-[#7a7a7a] leading-relaxed">
             Here's a glimpse of the work I have done recently. Includes professional and hobbyist works
-          </p>
+          </AnimateOnScroll>
 
           {/* Project Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
+          <div
+            className="grid grid-cols-1 md:grid-cols-2 gap-3 pt-4"
+            onMouseLeave={() => setHoveredWorkId(null)}
+          >
             {(showAllWorks ? caseStudiesData : caseStudiesData.slice(0, 4)).map((caseStudy, index) => (
               <Link
                 key={caseStudy.id}
                 href={`/works/${caseStudy.id}`}
-                className={`group ${index >= 4 ? `work-item work-item-delay-${index - 3}` : ''}`}
+                className={`group transition-all duration-300 ${index >= 4 ? `work-item work-item-delay-${index - 3}` : ''} ${hoveredWorkId && hoveredWorkId !== caseStudy.id ? 'blur-[2px] opacity-50' : ''}`}
                 style={index >= 4 ? { opacity: 0 } : undefined}
+                onMouseEnter={() => {
+                  setHoveredWorkId(caseStudy.id);
+                  setHoveredCaseStudyImages(caseStudy.images.slice(0, 5));
+                  setIsCursorPreviewVisible(true);
+                }}
+                onMouseLeave={() => {
+                  setIsCursorPreviewVisible(false);
+                }}
               >
                 <div className="relative w-full aspect-video rounded-lg overflow-hidden">
                   <Image
@@ -422,7 +640,7 @@ export default function Home() {
                     fill
                     className="object-cover transition-all duration-300 group-hover:brightness-110"
                     sizes="(max-width: 768px) 100vw, 50vw"
-                    quality={85}
+                    quality={100}
                     priority={index < 2}
                   />
                 </div>
@@ -473,125 +691,6 @@ export default function Home() {
           )}
         </section>
 
-        {/* CURRENTLY LEARNING Section */}
-        <section className="space-y-6 mt-20">
-          {/* Section Heading */}
-          <AnimateOnScroll as="h3" className="text-base font-mono uppercase tracking-wider text-white">
-            CURRENTLY LEARNING
-          </AnimateOnScroll>
-
-          {/* Intro Text */}
-          <AnimateOnScroll className="text-lg text-[#7a7a7a] leading-relaxed space-y-4">
-            <p>
-              <span className="text-white font-regular">Coding!</span> Yep, learning to code so that I can bring my small ideas to life and claim a small part off then internet as mine! These are mostly some problems I face and I build a solution to it withouth thinking much.
-            </p>
-            <p>
-              Built and launched 2 projects on{' '}
-              <a
-                href="https://peerlist.io/omkarux"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white font-regular underline underline-offset-4 hover:opacity-80 transition-opacity"
-              >
-                Peerlist
-              </a>
-            </p>
-          </AnimateOnScroll>
-
-          {/* Project Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-            {/* Card 1: Lentlay */}
-            <AnimateOnScroll className="bg-[#1a1a1a] rounded-xl gap-2 p-2 flex flex-col">
-              <div className="flex items-start gap-4">
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image
-                    src="/currently learning/lentlay.png"
-                    alt="Lentlay logo"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div>
-                  <h4 className="text-lg font-medium text-white">Lentlay</h4>
-                  <p className="text-sm text-[#7a7a7a]">Your Images made glassy</p>
-                </div>
-              </div>
-              <div className="min-h-[1px] w-full bg-[#363636]"></div>
-              <div className="flex justify-between items-center">
-                <a
-                  href="https://lentlay.framer.website"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex uppercase font-mono items-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white text-sm font-regular px-2 py-1 rounded-lg transition-colors group"
-                >
-                  Visit
-                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white" />
-                </a>
-                <a
-                  href="https://peerlist.io/omkarux/project/lentlay"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex p-1 items-center gap-1 hover:bg-[#009940] rounded-full transition-colors"
-                >
-                  <Image
-                    src="/logos/peerlist.png"
-                    alt="Peerlist"
-                    width={18}
-                    height={18}
-                    className="rounded-full"
-                  />
-                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white transition-colors" />
-                </a>
-              </div>
-            </AnimateOnScroll>
-
-            {/* Card 2: Secards */}
-            <AnimateOnScroll className="bg-[#1a1a1a] rounded-xl gap-2 p-2 flex flex-col">
-              <div className="flex items-start gap-2">
-                <div className="relative w-12 h-12 rounded-lg overflow-hidden flex-shrink-0">
-                  <Image
-                    src="/currently learning/secards-sq.png"
-                    alt="Secards logo"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-                <div className="w-full">
-                  <h4 className="text-lg font-medium text-white">Secards</h4>
-                  <p className="text-sm text-[#7a7a7a]">All of Secured cards in India</p>
-                </div>
-              </div>
-              <div className="min-h-[1px] w-full bg-[#363636]"></div>
-              <div className="flex justify-between items-center">
-                <a
-                  href="https://secards.vercel.app"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white text-sm font-regular font-mono uppercase px-2 py-1 rounded-lg transition-colors group"
-                >
-                  Visit
-                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white"/>
-                </a>
-                <a
-                  href="https://peerlist.io/omkarux/project/secards"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex p-1 items-center gap-1 hover:bg-[#009940] rounded-full transition-colors"
-                >
-                  <Image
-                    src="/logos/peerlist.png"
-                    alt="Peerlist"
-                    width={18}
-                    height={18}
-                    className="rounded-full"
-                  />
-                  <ArrowUpRight size={14} weight="regular" className="text-[#6a6a6a] group-hover:text-white" />
-                </a>
-              </div>
-            </AnimateOnScroll>
-          </div>
-        </section>
-
         {/* UX SHORTS Section */}
         <section className="space-y-6 mt-20">
           {/* Section Heading */}
@@ -623,7 +722,7 @@ export default function Home() {
           </AnimateOnScroll>
 
           {/* Blog Cards */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-3">
             {visibleBlogs.map((blog, index) => (
               <AnimateOnScroll key={index}>
                 <BlogCard
@@ -684,7 +783,7 @@ export default function Home() {
           </AnimateOnScroll>
 
           {/* Social links */}
-          <AnimateOnScroll className="grid grid-cols-4 gap-4">
+          <AnimateOnScroll className="grid grid-cols-4 gap-3">
             {/* LinkedIn */}
             <a
               href="https://linkedin.com/in/omkarmangalekar"
@@ -802,7 +901,7 @@ export default function Home() {
                     aria-label="Movie quote tooltip"
                     className="absolute -left-32 translate-x-1/64 top-full mt-2 z-[9999] w-100 sm:w-[500px] bg-[#1a1a1a] rounded-lg shadow-2xl border border-[#1c1c1c] p-2 animate-tooltip"
                   >
-                    <div className="flex gap-4">
+                    <div className="flex gap-2">
                       {/* Movie Poster */}
                       <div className="flex-shrink-0">
                         <Image
@@ -872,6 +971,21 @@ export default function Home() {
         onClose={closeOffScreenViewer}
         onNavigate={setCurrentOffScreenImageIndex}
         useCenteredView={true}
+      />
+
+      {/* Case Study Blog Viewer */}
+      {activeBlogCaseStudy && (
+        <CaseStudyBlogViewer
+          study={activeBlogCaseStudy}
+          isOpen={true}
+          onClose={closeBlogViewer}
+        />
+      )}
+
+      {/* Cursor Slideshow Preview */}
+      <CursorSlideshow
+        images={hoveredCaseStudyImages}
+        isVisible={isCursorPreviewVisible}
       />
 
       {/* Modal for SocialSonar */}

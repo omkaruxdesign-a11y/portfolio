@@ -1,6 +1,6 @@
 'use client';
 
-import { use } from 'react';
+import { use, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { companyCaseStudies, getCompanyCaseStudyIndex } from '@/app/data/caseStudies';
 import CaseStudyViewer from '@/app/components/CaseStudyViewer';
@@ -9,6 +9,11 @@ export default function IntroModal({ params }: { params: Promise<{ id: string }>
   const { id } = use(params);
   const router = useRouter();
   const index = getCompanyCaseStudyIndex(id);
+  const hasHistory = useRef(false);
+
+  useEffect(() => {
+    hasHistory.current = window.history.length > 1;
+  }, []);
 
   if (index === -1) {
     router.back();
@@ -16,7 +21,11 @@ export default function IntroModal({ params }: { params: Promise<{ id: string }>
   }
 
   const handleClose = () => {
-    router.back();
+    if (hasHistory.current) {
+      router.back();
+    } else {
+      router.push('/about');
+    }
   };
 
   const handleNavigate = (newIndex: number) => {

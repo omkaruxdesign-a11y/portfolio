@@ -116,7 +116,10 @@ export default function ImageViewer({
     >
       {/* Close Button */}
       <button
-        onClick={onClose}
+        onClick={(e) => {
+          e.stopPropagation();
+          onClose();
+        }}
         className="absolute top-4 right-4 z-[60] text-white/70 hover:text-white p-1.5 rounded-full bg-white/10 hover:bg-white/20 transition-colors flex items-center justify-center"
         aria-label="Close viewer"
       >

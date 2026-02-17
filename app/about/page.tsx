@@ -176,7 +176,7 @@ export default function AboutPage() {
         {/* Bat icon placeholder */}
         <div className="relative mb-6">
           <Image
-            src="/logos/profile-pic.png"
+            src="/batman/batman.svg"
             alt="Batman logo"
             width={67}
             height={24}
@@ -201,9 +201,17 @@ export default function AboutPage() {
             onMouseEnter={() => setShowMovieTooltip(true)}
             onMouseLeave={() => setShowMovieTooltip(false)}
           >
-            <span className="text-white font-regular underline underline-offset-4 cursor-pointer">
+            <a
+              className="text-white font-medium underline underline-offset-4 cursor-pointer"
+              href="https://www.imdb.com/title/tt0359950/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-describedby="movie-tooltip"
+              onFocus={() => setShowMovieTooltip(true)}
+              onBlur={() => setShowMovieTooltip(false)}
+            >
               The Secret Life of Walter Mitty
-            </span>
+            </a>
             {showMovieTooltip && <MovieTooltip />}
           </span>
           {' '}is something that I can watch anytime.
@@ -222,7 +230,7 @@ export default function AboutPage() {
       </DotRevealSection>
 
       {/* SECTION 4: Closing Quote */}
-      <DotRevealSection className="p-8">
+      <DotRevealSection className="p-8 py-12 item-center justfy-center">
         <p className="relative text-center text-white text-2xl font-serif">
           Ideas are overrated, execution is king
         </p>

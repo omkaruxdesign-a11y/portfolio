@@ -267,7 +267,7 @@ export default function WorksPage() {
       </DotRevealSection>
 
       {/* SECTION 4: Closing Quote */}
-      <DotRevealSection className="p-8 py-12">
+      <DotRevealSection className="p-8 py-12 ">
         <AnimateOnScroll className="item-center justify-center">
           <p className="text-white text-center text-2xl font-serif ">
           <span className="text-white font-regular ">More designers should be founders.</span>

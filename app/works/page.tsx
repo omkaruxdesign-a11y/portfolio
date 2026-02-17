@@ -257,7 +257,7 @@ export default function WorksPage() {
           UX SHORTS
         </AnimateOnScroll>
 
-        <AnimateOnScroll as="p" className="text-base text-[#7a7a7a] leading-relaxed">
+        <AnimateOnScroll as="p" className="text-base text-[#7a7a7a] ">
           Bites of some random ideas I had in mind...
         </AnimateOnScroll>
 
@@ -267,12 +267,13 @@ export default function WorksPage() {
       </DotRevealSection>
 
       {/* SECTION 4: Closing Quote */}
-      <DotRevealSection className="p-8">
-        <AnimateOnScroll>
-          <p className="text-white text-lg font-sans leading-relaxed">
-            More designers should be founders. And we want to back them at YC.
+      <DotRevealSection className="p-8 py-12">
+        <AnimateOnScroll className="item-center justify-center">
+          <p className="text-white text-center text-2xl font-serif ">
+          <span className="text-white font-regular ">More designers should be founders.</span>
+             And we want to back them at YC.
           </p>
-          <p className="text-[#7a7a7a] text-base font-mono mt-2">
+          <p className="text-center text-[#7a7a7a] text-base font-mono mt-2">
             - AARON EPSTEIN, YC
           </p>
         </AnimateOnScroll>

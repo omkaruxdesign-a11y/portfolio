@@ -223,10 +223,10 @@ export default function AboutPage() {
 
       {/* SECTION 4: Closing Quote */}
       <DotRevealSection className="p-8">
-        <p className="relative text-white text-base font-sans">
+        <p className="relative text-center text-white text-2xl font-serif">
           Ideas are overrated, execution is king
         </p>
-        <p className="relative text-[#7a7a7a] text-base font-mono mt-2">
+        <p className="relative text-center text-[#7a7a7a] text-base font-mono mt-2">
           - NAVAL
         </p>
       </DotRevealSection>

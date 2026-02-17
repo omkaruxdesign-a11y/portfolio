@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { DM_Sans, DM_Mono } from "next/font/google";
 import "./globals.css";
+import Nav from "./components/Nav";
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
@@ -61,7 +62,10 @@ export default function RootLayout({
       <body
         className={`${dmSans.variable} ${dmMono.variable} antialiased`}
       >
-        {children}
+        <main className="border border-[#2a2a2a] min-h-screen bg-black max-w-[700px] mx-auto">
+          <Nav />
+          {children}
+        </main>
         {modal}
       </body>
     </html>

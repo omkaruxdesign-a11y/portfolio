@@ -5,9 +5,10 @@ import { useState, useRef, useCallback } from 'react';
 interface DotRevealSectionProps {
   children: React.ReactNode;
   className?: string;
+  onClick?: () => void;
 }
 
-export default function DotRevealSection({ children, className = '' }: DotRevealSectionProps) {
+export default function DotRevealSection({ children, className = '', onClick }: DotRevealSectionProps) {
   const [hovered, setHovered] = useState(false);
   const [mouse, setMouse] = useState({ x: 0, y: 0 });
   const [radius, setRadius] = useState(0);
@@ -45,6 +46,7 @@ export default function DotRevealSection({ children, className = '' }: DotReveal
       className={`relative overflow-hidden ${className}`}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onClick={onClick}
     >
       <div
         className="absolute inset-0 pointer-events-none"

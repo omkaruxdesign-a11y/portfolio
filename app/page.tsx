@@ -12,11 +12,11 @@ import { blogCaseStudies, type BlogCaseStudy } from "./data/blogCaseStudies";
 const caseStudyDescriptions: Record<string, { title: string; readTime: string }> = {
   lentlay: {
     title: "How I ideated, designed, built, launched Lentlay on Peerlist which got staff picked!",
-    readTime: "2 min read",
+    readTime: "4 min read",
   },
   secards: {
-    title: "0 to 1 journey for a Local Sports Fantasy platform which enabled initial market validation ",
-    readTime: "2 min read",
+    title: "Building the only directory of secured credit cards in India, helping people to begin their credit journey",
+    readTime: "4 min read",
   },
 };
 
@@ -26,6 +26,8 @@ export default function Home() {
   const [hoveredCaseStudyImages, setHoveredCaseStudyImages] = useState<string[]>([]);
   const [isCursorPreviewVisible, setIsCursorPreviewVisible] = useState(false);
   const [hoveredCaseStudyId, setHoveredCaseStudyId] = useState<string | null>(null);
+  const [isActive, setIsActive] = useState(false);
+
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -158,9 +160,20 @@ export default function Home() {
       `}</style>
 
         {/* Hero Section */}
-        <DotRevealSection className={`p-8 py-12 border-b border-[#2a2a2a] ${isLoaded ? 'animate-blur-fade-in animate-delay-1' : 'opacity-0'}`}>
-          <div className="relative flex flex-col items-start gap-2">
+        <DotRevealSection className={`group/batman p-8 py-12 border-b border-[#2a2a2a] ${isLoaded ? 'animate-blur-fade-in animate-delay-1' : 'opacity-0'}`} onClick={() => isMobile && setIsActive(!isActive)}>
+          <div className="relative flex flex-col items-start gap-2 ">
             {/* Profile Image */}
+
+            <div className={`absolute -rotate-35 transition-all duration-300 ${isActive ? '-bottom-15 -right-18 scale-105' : '-bottom-25 -right-25'} md:!-bottom-25 md:!-right-25 md:!scale-100 md:group-hover/batman:!-bottom-15 md:group-hover/batman:!-right-18 md:group-hover/batman:!scale-105`}>
+              <Image
+                src="/batman/img.png"
+                alt="batman"
+                width={140}
+                height={40}
+                className="rounded-sm"
+              />
+            </div>
+
             <div className="rounded-full">
               <Image
                 src="/logos/profile-pic.png"
@@ -178,8 +191,8 @@ export default function Home() {
                 <span className="text-white font-light font-serif">Omkar</span>
               </h1>
               <h2 className="text-3xl">
-                <span className="text-[#7a7a7a] font-serif">and I love things that </span>
-                <span className="text-white font-light font-serif">add value to lives</span>
+                <span className="text-[#7a7a7a] font-serif">and I love products</span>
+                <span className="text-white font-light font-serif"> with a great PMF</span>
               </h2>
             </div>
           </div>
@@ -188,7 +201,7 @@ export default function Home() {
         {/* Sub Hero Section */}
         <DotRevealSection className={`px-8 py-4 border-b border-[#2a2a2a] ${isLoaded ? 'animate-blur-fade-in animate-delay-2' : 'opacity-0'}`}>
           <p className="relative text-lg text-[#A1A1A1]">
-            A <span className="text-white font-regular">Product Designer</span> now and a learner forever!
+            A <span className="text-white font-regular">Product Designer</span> (who ships) now and a learner forever!
           </p>
         </DotRevealSection>
 

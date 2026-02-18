@@ -64,12 +64,12 @@ export default function AboutPage() {
       {/* SECTION 1: Hero Quote */}
       <DotRevealSection className={`bg-white/5 border-b border-[#2a2a2a] p-8 py-12 ${isLoaded ? 'animate-blur-fade-in animate-delay-1' : 'opacity-0'}`}>
         <h1 className="relative text-3xl font-serif text-[#7a7a7a] mb-3">
-          It&apos;s not easy to find{' '}
-          <span className="text-white font-regular font-serif">passionate</span>
-          {' '}people in the market!
+          
+          <span className="text-white font-regular font-serif">Distribution</span>
+          {' '}is the first factor to be taken care of when building...
         </h1>
         <p className="relative text-[#7a7a7a] text-base font-sans">
-          – Learnt this when growing a team
+          – Learnt this working at a startup
         </p>
       </DotRevealSection>
 
@@ -84,7 +84,9 @@ export default function AboutPage() {
           <span className="text-white font-regular">product designer</span>
           {' '}for{' '}
           <span className="text-white font-regular">2 years</span>
-          {' '}now, and later focused on giving early stage start-ups an Headstart they need.
+          {' '}now, and to be honest; I am someone who enjoys my work, finds that "fun" things to build even if those does not bring the impact. 
+          <span  className="text-white font-regular"> Those are the things that teach the most</span> 
+          {' '}and can iterate on that... 
         </p>
 
         {/* Experience list */}
@@ -134,7 +136,7 @@ export default function AboutPage() {
           </div>
 
           {/* VestorGrow */}
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               <Image
                 src="/logos/vestorgrow.png"
@@ -156,6 +158,7 @@ export default function AboutPage() {
           </div>
         </div>
 
+      
       </DotRevealSection>
 
       {/* SECTION 3: OFF SCREEN */}

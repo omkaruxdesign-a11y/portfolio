@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { X, Plus, Lock } from "@phosphor-icons/react";
+import { Lock } from "@phosphor-icons/react";
 import ImageSlider, { SliderImage } from "../components/ImageSlider";
 import ImageViewer, { ViewerImage } from "../components/ImageViewer";
 import AnimateOnScroll from "../components/AnimateOnScroll";
@@ -21,22 +21,12 @@ const uxShortsImages: SliderImage[] = [
 
 export default function WorksPage() {
   const [isLoaded, setIsLoaded] = useState(false);
-  const [showAllWorks, setShowAllWorks] = useState(false);
   const [isUxViewerOpen, setIsUxViewerOpen] = useState(false);
   const [currentUxImageIndex, setCurrentUxImageIndex] = useState(0);
-  const [expandAnimDone, setExpandAnimDone] = useState(false);
   const [hoveredWorkId, setHoveredWorkId] = useState<string | null>(null);
   const [hoveredCaseStudyImages, setHoveredCaseStudyImages] = useState<string[]>([]);
   const [isCursorPreviewVisible, setIsCursorPreviewVisible] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    if (showAllWorks) {
-      const timer = setTimeout(() => setExpandAnimDone(true), 750);
-      return () => clearTimeout(timer);
-    }
-    setExpandAnimDone(false);
-  }, [showAllWorks]);
 
   useEffect(() => {
     setIsLoaded(true);
@@ -123,32 +113,6 @@ export default function WorksPage() {
           filter: blur(0px);
           transform: translateY(0);
         }
-
-        /* Work items expand animation */
-        @keyframes workItemFadeIn {
-          from {
-            opacity: 0;
-            filter: blur(4px);
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            filter: blur(0px);
-            transform: translateY(0);
-          }
-        }
-
-        .work-item {
-          animation: workItemFadeIn 0.4s ease-out forwards;
-        }
-
-        .work-item-delay-1 { animation-delay: 0ms; }
-        .work-item-delay-2 { animation-delay: 50ms; }
-        .work-item-delay-3 { animation-delay: 100ms; }
-        .work-item-delay-4 { animation-delay: 150ms; }
-        .work-item-delay-5 { animation-delay: 200ms; }
-        .work-item-delay-6 { animation-delay: 250ms; }
-        .work-item-delay-7 { animation-delay: 300ms; }
       `}</style>
 
       {/* SECTION 1: Hero Quote */}
@@ -177,11 +141,11 @@ export default function WorksPage() {
           className="relative grid grid-cols-1 md:grid-cols-2 gap-3 pt-4"
           onMouseLeave={() => !isMobile && setHoveredWorkId(null)}
         >
-          {(showAllWorks ? caseStudiesData : caseStudiesData.slice(0, 4)).map((caseStudy, index) => (
+          {caseStudiesData.map((caseStudy, index) => (
             <Link
               key={caseStudy.id}
               href={`/works/${caseStudy.id}`}
-              className={`group transition-all duration-300 ${index >= 4 && !expandAnimDone ? `work-item work-item-delay-${index - 3}` : ''} ${!isMobile && hoveredWorkId && hoveredWorkId !== caseStudy.id ? 'blur-[2px] opacity-50' : ''}`}
+              className={`group transition-all duration-300 ${!isMobile && hoveredWorkId && hoveredWorkId !== caseStudy.id ? 'blur-[2px] opacity-50' : ''}`}
               onMouseEnter={() => {
                 if (isMobile) return;
                 setHoveredWorkId(caseStudy.id);
@@ -230,25 +194,6 @@ export default function WorksPage() {
           ))}
         </div>
 
-        {/* View More/Less Button */}
-        {caseStudiesData.length > 4 && (
-          <button
-            onClick={() => setShowAllWorks(!showAllWorks)}
-            className="relative w-full flex items-center cursor-pointer font-mono justify-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white text-sm font-regular uppercase py-3 rounded-full transition-colors group"
-          >
-            {showAllWorks ? (
-              <>
-                <X size={18} weight="bold" className="text-[#6a6a6a] group-hover:text-white" />
-                View Less
-              </>
-            ) : (
-              <>
-                <Plus size={18} weight="bold" className="text-[#6a6a6a] group-hover:text-white" />
-                View More
-              </>
-            )}
-          </button>
-        )}
       </DotRevealSection>
 
       {/* SECTION 3: UX SHORTS */}

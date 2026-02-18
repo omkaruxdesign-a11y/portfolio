@@ -77,13 +77,13 @@ export default function ImageSlider({ images, onImageClick }: ImageSliderProps) 
             className="flex-shrink-0 cursor-pointer group/item"
             onClick={() => onImageClick(index)}
           >
-            <div className="relative w-[280px] h-[157px] rounded-lg overflow-hidden transition-all duration-300 hover:brightness-110">
+            <div className="relative w-[380px] h-[214px] rounded-lg overflow-hidden transition-all duration-300 hover:brightness-110">
               <Image
                 src={image.src}
                 alt={image.name}
                 fill
                 className="object-cover"
-                sizes="280px"
+                sizes="380px"
                 quality={100}
               />
               {/* App Icon Overlay

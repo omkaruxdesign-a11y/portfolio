@@ -18,7 +18,7 @@ export interface BlogCaseStudy {
 export const blogCaseStudies: BlogCaseStudy[] = [
   {
     id: "lentlay",
-    title: "Lentlay",
+    title: "How I ideated, designed, built, launched Lentlay on Peerlist which got staff picked!",
     subtext: "Bringing lenticular effect to any image",
     thumbnail: "/casestudy/lentlay/1.png",
     content: [
@@ -123,7 +123,7 @@ export const blogCaseStudies: BlogCaseStudy[] = [
   },
   {
     id: "secards",
-    title: "Secards",
+    title: "Building the only directory of secured credit cards in India, helping people to begin their credit journey",
     subtext: "Directory of Secured cards in India",
     thumbnail: "/casestudy/secards/1.png",
     content: [

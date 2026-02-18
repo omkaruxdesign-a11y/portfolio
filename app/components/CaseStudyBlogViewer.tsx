@@ -1,9 +1,13 @@
 'use client';
 
-import { useEffect, useRef, useCallback, useState } from 'react';
+import { useEffect, useRef, useCallback, useState, useMemo } from 'react';
 import Image from 'next/image';
 import { X, ArrowUpRight } from '@phosphor-icons/react';
 import type { BlogCaseStudy, BlogContentBlock } from '../data/blogCaseStudies';
+
+function slugify(text: string): string {
+  return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+}
 
 function ContentRenderer({ blocks }: { blocks: BlogContentBlock[] }) {
   return (
@@ -41,7 +45,8 @@ function ContentRenderer({ blocks }: { blocks: BlogContentBlock[] }) {
             return (
               <h3
                 key={index}
-                className="text-base font-regular text-white mt-1 mb-3 font-mono uppercase"
+                id={slugify(block.text)}
+                className="text-base font-regular text-white mt-1 mb-3 font-mono uppercase scroll-mt-20"
               >
                 {block.text}
               </h3>
@@ -145,6 +150,62 @@ export default function CaseStudyBlogViewer({
   const previousFocusRef = useRef<HTMLElement | null>(null);
   const lastScrollY = useRef(0);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>('');
+
+  // Extract heading sections for nav
+  const sections = useMemo(() =>
+    study.content
+      .filter((b): b is Extract<BlogContentBlock, { type: 'heading' }> => b.type === 'heading')
+      .map(b => ({ id: slugify(b.text), label: b.text })),
+    [study.content]
+  );
+
+  // IntersectionObserver to track active section
+  useEffect(() => {
+    const scrollEl = overlayRef.current;
+    if (!scrollEl || !isOpen || sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      {
+        root: scrollEl,
+        rootMargin: '-20% 0px -70% 0px',
+        threshold: 0,
+      }
+    );
+
+    // Observe all heading elements
+    const headingEls = sections
+      .map(s => scrollEl.querySelector(`#${s.id}`))
+      .filter(Boolean) as Element[];
+
+    headingEls.forEach(el => observer.observe(el));
+
+    return () => observer.disconnect();
+  }, [isOpen, sections]);
+
+  const scrollToSection = useCallback((sectionId: string) => {
+    const scrollEl = overlayRef.current;
+    if (!scrollEl) return;
+
+    const isFirst = sections.length > 0 && sectionId === sections[0].id;
+    const isLast = sections.length > 0 && sectionId === sections[sections.length - 1].id;
+
+    if (isFirst) {
+      scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (isLast) {
+      scrollEl.scrollTo({ top: scrollEl.scrollHeight, behavior: 'smooth' });
+    } else {
+      const el = scrollEl.querySelector(`#${sectionId}`);
+      el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }, [sections]);
 
   // Hide header on scroll down, show on scroll up (mobile)
   useEffect(() => {
@@ -244,6 +305,29 @@ export default function CaseStudyBlogViewer({
         <X size={16} weight="regular" />
       </button>
 
+      {/* Section Nav - desktop only */}
+      {sections.length > 0 && (
+        <nav
+          className="bg-white/5 p-2 border border-white/10 rounded-md fixed top-1/2 -translate-y-1/2 z-[55] hidden xl:flex flex-col gap-1"
+          style={{ right: 'calc(50% + 365px)' }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          {sections.map((section) => (
+            <button
+              key={section.id}
+              onClick={() => scrollToSection(section.id)}
+              className={`text-left text-sm py-1 px-3 transition-all duration-200 border-l-2 ${
+                activeSection === section.id
+                  ? 'text-white border-white '
+                  : 'text-[#7a7a7a] border-transparent hover:text-[#a1a1a1] hover:border-[#7a7a7a]'
+              }`}
+            >
+              {section.label}
+            </button>
+          ))}
+        </nav>
+      )}
+
       {/* Content */}
       <div
         ref={contentRef}
@@ -251,13 +335,13 @@ export default function CaseStudyBlogViewer({
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Section with Close Button */}
-        <header className={`p-2 pt-6 bg-black/80 backdrop-blur-3xl sticky top-0 z-[3] group/title transition-transform duration-300 ${isHeaderHidden ? '-translate-y-full md:translate-y-0' : 'translate-y-0'}`}>
+        <header className={`p-2 pt-6 bg-black/80 backdrop-blur-3xl sticky top-0 z-[3] group/title transition-transform duration-300 ${isHeaderHidden ? '-translate-y-full' : 'translate-y-0'}`}>
           <div className="flex items-start justify-between gap-2">
             <div>
-              <h2 className="text-2xl font-bold text-white font-sans">
+              <h2 className="text-2xl font-semibold text-white font-sans">
                 {study.title}
               </h2>
-              <p className="text-[#7a7a7a] text-base">{study.subtext}</p>
+              <p className="text-[#6a6a6a] text-base">{study.subtext}</p>
             </div>
             <button
               onClick={onClose}

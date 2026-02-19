@@ -1,9 +1,12 @@
 'use client';
 
 import { useEffect, useRef, useCallback, useState, useMemo } from 'react';
+import { createPortal } from 'react-dom';
 import Image from 'next/image';
 import { X, ArrowUpRight } from '@phosphor-icons/react';
 import type { BlogCaseStudy, BlogContentBlock } from '../data/blogCaseStudies';
+import ImageViewer from './ImageViewer';
+import type { ViewerImage } from './ImageViewer';
 
 function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');

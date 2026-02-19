@@ -217,7 +217,7 @@ export default function Home() {
             className="relative grid grid-cols-1 md:grid-cols-2 gap-6 items-start"
             onMouseLeave={() => !isMobile && setHoveredCaseStudyId(null)}
           >
-            {blogCaseStudies.map((study) => {
+            {blogCaseStudies.filter(s => s.id === 'lentlay' || s.id === 'secards').map((study) => {
               const studyImages = study.content
                 .filter((block): block is { type: "image"; src: string; alt: string } => block.type === "image")
                 .map((block) => block.src);

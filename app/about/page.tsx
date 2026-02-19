@@ -7,6 +7,8 @@ import SocialSonarModal from '../components/SocialSonarModal';
 import MovieTooltip from '../components/MovieTooltip';
 import OffScreenSlider from '../components/OffScreenSlider';
 import DotRevealSection from '../components/DotRevealSection';
+import BlogCard from '../components/BlogCard';
+import { ArrowUpRightIcon } from '@phosphor-icons/react';
 
 export default function AboutPage() {
   const [showSocialSonarModal, setShowSocialSonarModal] = useState(false);
@@ -161,8 +163,54 @@ export default function AboutPage() {
       
       </DotRevealSection>
 
-      {/* SECTION 3: OFF SCREEN */}
+      {/* SECTION 3: BLOGS */}
       <DotRevealSection className={`border-b border-[#2a2a2a] p-8 ${isLoaded ? 'animate-blur-fade-in animate-delay-3' : 'opacity-0'}`}>
+        <p className="relative text-sm font-mono uppercase text-white mb-4">
+          BLOGS
+        </p>
+
+        <p className="relative text-[#7a7a7a] text-base mb-6">
+          I love to write more than reading. I write about anything I think
+        </p>
+
+        <div className="relative space-y-2">
+          <BlogCard
+            title="How an Indian Boy Discovers about Finance"
+            image="/blogs/Finance.jpg"
+            excerpt="A personal journey of discovering financial literacy and what it means for a young Indian navigating money, savings, and the future."
+            date="Mar 25, 2025"
+            link="#"
+          />
+          <BlogCard
+            title="Judge a book by it's cover"
+            image="/blogs/book1.jpg"
+            excerpt="Why first impressions in design — and life — matter more than we like to admit. A designer's take on visual judgment."
+            date="Mar 25, 2025"
+            link="#"
+          />
+          <BlogCard
+            title="Privilege"
+            image="/blogs/privilege.jpg"
+            excerpt="Reflecting on the invisible advantages we carry and how awareness of privilege shapes the way we build products and interact with the world."
+            date="Mar 25, 2025"
+            link="#"
+          />
+        </div>
+
+        <a
+          href="https://medium.com/@mangalekarom"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="relative mt-4 flex items-center justify-center gap-2 w-full py-3 bg-[#1a1a1a] hover:bg-[#222222] text-white text-sm rounded-full transition-colors font-mono uppercase"
+        >
+          <Image src="/socials/medium.svg" alt="Medium" width={18} height={18} />
+          View More on Medium
+          <ArrowUpRightIcon width={18} height={18} />
+        </a>
+      </DotRevealSection>
+
+      {/* SECTION 4: OFF SCREEN */}
+      <DotRevealSection className={`border-b border-[#2a2a2a] p-8 ${isLoaded ? 'animate-blur-fade-in animate-delay-4' : 'opacity-0'}`}>
         <p className="relative text-sm font-mono uppercase tracking-wider text-white mb-4">
           OFF SCREEN
         </p>
@@ -232,7 +280,7 @@ export default function AboutPage() {
         </div>
       </DotRevealSection>
 
-      {/* SECTION 4: Closing Quote */}
+      {/* SECTION 5: Closing Quote */}
       <DotRevealSection className="p-8 py-12 item-center justfy-center">
         <p className="relative text-center text-white text-2xl font-serif">
           Ideas are overrated, execution is king

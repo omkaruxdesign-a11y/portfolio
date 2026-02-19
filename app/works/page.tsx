@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect, useRef, useCallback } from "react";
-import { Lock } from "@phosphor-icons/react";
 import ImageSlider, { SliderImage } from "../components/ImageSlider";
 import ImageViewer, { ViewerImage } from "../components/ImageViewer";
 import AnimateOnScroll from "../components/AnimateOnScroll";
@@ -173,18 +172,6 @@ export default function WorksPage() {
                   <h4 className="text-white text-base font-medium group-hover:underline underline-offset-2">
                     {caseStudy.title}
                   </h4>
-                  {caseStudy.isNDA && (
-                    <div className="relative flex-shrink-0 group/lock">
-                      <Lock
-                        size={16}
-                        weight="regular"
-                        className="text-[#7a7a7a] hover:text-white cursor-pointer"
-                      />
-                      <span className="absolute left-1/2 -translate-x-1/2 -top-8 px-2 py-1 text-xs text-[#a1a1a1] bg-[#1a1a1a] border border-[#2a2a2a] rounded whitespace-nowrap opacity-0 group-hover/lock:opacity-100 transition-opacity">
-                        Under NDA
-                      </span>
-                    </div>
-                  )}
                 </div>
                 <p className="text-[#7a7a7a] group-hover:text-[#9d9d9d] text-sm">
                   {caseStudy.subtext}

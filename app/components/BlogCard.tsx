@@ -32,13 +32,13 @@ export default function BlogCard({ title, image, excerpt, date, link }: BlogCard
 
       {/* Content */}
       <div className="flex flex-col justify-center flex-1 min-w-0">
-        <h4 className="text-lg font-medium text-white line-clamp-2">
+        <h4 className="text-base font-regular text-white line-clamp-2">
           {title}
         </h4>
-        <p className="text-sm text-[#A1A1A1] line-clamp-2 mb-6">
+        <p className="text-sm text-[#7a7a7a] line-clamp-2 mb-6">
           {excerpt}
         </p>
-        <span className="text-sm text-[#6a6a6a]">
+        <span className="text-sm text-[#7a7a7a]">
           {date}
         </span>
       </div>

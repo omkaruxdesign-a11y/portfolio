@@ -140,45 +140,76 @@ export default function WorksPage() {
           className="relative grid grid-cols-1 md:grid-cols-2 gap-3 pt-4"
           onMouseLeave={() => !isMobile && setHoveredWorkId(null)}
         >
-          {caseStudiesData.map((caseStudy, index) => (
-            <Link
-              key={caseStudy.id}
-              href={`/works/${caseStudy.id}`}
-              className={`group transition-all duration-300 ${!isMobile && hoveredWorkId && hoveredWorkId !== caseStudy.id ? 'blur-[2px] opacity-50' : ''}`}
-              onMouseEnter={() => {
-                if (isMobile) return;
-                setHoveredWorkId(caseStudy.id);
-                setHoveredCaseStudyImages(caseStudy.images.slice(0, 5));
-                setIsCursorPreviewVisible(true);
-              }}
-              onMouseLeave={() => {
-                if (isMobile) return;
-                setIsCursorPreviewVisible(false);
-              }}
-            >
-              <div className="relative w-full aspect-video rounded-lg overflow-hidden">
-                <Image
-                  src={caseStudy.thumbnail || caseStudy.images[0]}
-                  alt={caseStudy.title}
-                  fill
-                  className="object-cover transition-all duration-300 group-hover:brightness-110"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                  quality={100}
-                  priority={index < 2}
-                />
-              </div>
-              <div className="mt-2">
-                <div className="flex items-center justify-between gap-1">
-                  <h4 className="text-white text-base font-medium group-hover:underline underline-offset-2">
-                    {caseStudy.title}
-                  </h4>
+            {caseStudiesData.map((caseStudy, index) => {
+            if (caseStudy.isComingSoon) {
+              return (
+                <div
+                  key={caseStudy.id}
+                  className={`opacity-60 cursor-default transition-all duration-300 ${!isMobile && hoveredWorkId ? 'blur-[2px]' : ''}`}
+                >
+                  <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                    <Image
+                      src={caseStudy.thumbnail || caseStudy.images[0]}
+                      alt={caseStudy.title}
+                      fill
+                      className="object-cover"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      quality={100}
+                      priority={index < 2}
+                    />
+                  </div>
+                  <div className="mt-2">
+                    <h4 className="text-white text-base font-medium">
+                      {caseStudy.title}
+                    </h4>
+                    <p className="text-[#7a7a7a] text-sm">
+                      {caseStudy.subtext}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-[#7a7a7a] group-hover:text-[#9d9d9d] text-sm">
-                  {caseStudy.subtext}
-                </p>
-              </div>
-            </Link>
-          ))}
+              );
+            }
+
+            return (
+              <Link
+                key={caseStudy.id}
+                href={`/works/${caseStudy.id}`}
+                className={`group transition-all duration-300 ${!isMobile && hoveredWorkId && hoveredWorkId !== caseStudy.id ? 'blur-[2px] opacity-50' : ''}`}
+                onMouseEnter={() => {
+                  if (isMobile) return;
+                  setHoveredWorkId(caseStudy.id);
+                  setHoveredCaseStudyImages(caseStudy.images.slice(0, 5));
+                  setIsCursorPreviewVisible(true);
+                }}
+                onMouseLeave={() => {
+                  if (isMobile) return;
+                  setIsCursorPreviewVisible(false);
+                }}
+              >
+                <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                  <Image
+                    src={caseStudy.thumbnail || caseStudy.images[0]}
+                    alt={caseStudy.title}
+                    fill
+                    className="object-cover transition-all duration-300 group-hover:brightness-110"
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    quality={100}
+                    priority={index < 2}
+                  />
+                </div>
+                <div className="mt-2">
+                  <div className="flex items-center justify-between gap-1">
+                    <h4 className="text-white text-base font-medium group-hover:underline underline-offset-2">
+                      {caseStudy.title}
+                    </h4>
+                  </div>
+                  <p className="text-[#7a7a7a] group-hover:text-[#9d9d9d] text-sm">
+                    {caseStudy.subtext}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
       </DotRevealSection>

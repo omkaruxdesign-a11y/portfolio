@@ -3,6 +3,7 @@ export interface CaseStudy {
   title: string;
   subtext: string;
   isNDA: boolean;
+  isComingSoon?: boolean;
   metadata: string;
   description?: string;
   impact?: string[];
@@ -11,6 +12,16 @@ export interface CaseStudy {
 }
 
 export const caseStudiesData: CaseStudy[] = [
+  {
+    id: "socialsonar",
+    title: "SocialSonar - AI Listening tool",
+    subtext: "Coming soon",
+    isNDA: false,
+    isComingSoon: true,
+    metadata: "",
+    thumbnail: "/works/socialsonar/1.png",
+    images: ["/works/socialsonar/1.png"],
+  },
   {
     id: "opinex",
     title: "Opinex - Fantasy Sports",
@@ -80,37 +91,6 @@ export const caseStudiesData: CaseStudy[] = [
       "/works/mshps/3.png",
       "/works/mshps/4.png",
       "/works/mshps/5.png",
-    ],
-  },
-  {
-    id: "intro-design",
-    title: "Introduction to Design",
-    subtext: "Presentation Deck ",
-    isNDA: false,
-    metadata: "Personal • Presentation • Oct 2025",
-    description: "This was when my professors from the college asked me to deliver a session on Design. Made this deck to help students understand what design in tech world really is. Hope I helped someone find their interest!",
-    impact: [
-      "Delivered session to 50+ engineering students",
-      "3 students reached out expressing interest in design careers",
-      "Created presentation deck for future sessions",
-    ],
-    thumbnail: "/works/intro-design/1.jpg",
-    images: [
-      "/works/intro-design/1.jpg",
-      "/works/intro-design/2.jpg",
-      "/works/intro-design/3.jpg",
-      "/works/intro-design/4.jpg",
-      "/works/intro-design/5.jpg",
-      "/works/intro-design/6.jpg",
-      "/works/intro-design/7.jpg",
-      "/works/intro-design/8.jpg",
-      "/works/intro-design/9.jpg",
-      "/works/intro-design/10.jpg",
-      "/works/intro-design/11.jpg",
-      "/works/intro-design/12.jpg",
-      "/works/intro-design/13.jpg",
-      "/works/intro-design/14.jpg",
-      "/works/intro-design/15.jpg",
     ],
   },
 ];

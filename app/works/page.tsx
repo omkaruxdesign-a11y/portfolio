@@ -219,6 +219,7 @@ export default function WorksPage() {
           isOpen={isUxViewerOpen}
           onClose={closeUxViewer}
           onNavigate={setCurrentUxImageIndex}
+          showLabel={false}
         />
       )}
 

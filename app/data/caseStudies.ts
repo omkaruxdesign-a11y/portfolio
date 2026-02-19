@@ -14,7 +14,7 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "opinex",
     title: "Opinex - Fantasy Sports",
-    subtext: "Built MVP allowing stakeholders to test and validate",
+    subtext: "Mobile app • Fast execution • Visual design ",
     isNDA: true,
     metadata: "Work • App • Feb 2025",
     description: "A fantasy sports platform for opinion trading for local events",
@@ -35,7 +35,7 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "nothing",
     title: "Essential Suggestions",
-    subtext: "Designed a personalized suggestion app for close friends",
+    subtext: "Mobile widget • visual • Product thinking",
     isNDA: false,
     metadata: "Concept • App-Widget • 2025",
     description: "This was my submission for Nothing's Community submissions where community submits their ideas of app-widgets and Nothing then chooses one and works with that person. It was quite an experience, worked on something different than usual phone/web things.",
@@ -64,7 +64,7 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "mshps",
     title: "MSHPS - Police Housing Corp. ",
-    subtext: "Reduced time of task completion involving billing and finances by 50%",
+    subtext: "Web-app • User flows • Product thinking",
     isNDA: true,
     metadata: "Web-App • Gov-Tech • Jan 2025",
     description: "This was a proposal design for a government organization which takes care of all the finances related to the police department",
@@ -85,7 +85,7 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "intro-design",
     title: "Introduction to Design",
-    subtext: "Delivered design session to engineering students",
+    subtext: "Presentation Deck ",
     isNDA: false,
     metadata: "Personal • Presentation • Oct 2025",
     description: "This was when my professors from the college asked me to deliver a session on Design. Made this deck to help students understand what design in tech world really is. Hope I helped someone find their interest!",

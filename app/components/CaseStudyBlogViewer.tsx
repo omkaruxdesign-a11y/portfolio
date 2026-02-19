@@ -12,7 +12,7 @@ function slugify(text: string): string {
   return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 }
 
-function ContentRenderer({ blocks }: { blocks: BlogContentBlock[] }) {
+function ContentRenderer({ blocks, onImageClick }: { blocks: BlogContentBlock[]; onImageClick?: (src: string) => void }) {
   return (
     <div className="space-y-0">
       {blocks.map((block, index) => {
@@ -20,17 +20,27 @@ function ContentRenderer({ blocks }: { blocks: BlogContentBlock[] }) {
           case 'image':
             return (
               <div key={index} className="my-8">
-                <Image
-                  src={block.src}
-                  alt={block.alt}
-                  width={650}
-                  height={400}
-                  className="w-full h-auto rounded-lg"
-                  loading={index === 0 ? undefined : 'lazy'}
-                  priority={index === 0}
-                  sizes="(max-width: 650px) 100vw, 650px"
-                  quality={100}
-                />
+                <div
+                  className="relative cursor-pointer group"
+                  onClick={() => onImageClick?.(block.src)}
+                  role="button"
+                  aria-label={`View ${block.alt} fullscreen`}
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === 'Enter' && onImageClick?.(block.src)}
+                >
+                  <Image
+                    src={block.src}
+                    alt={block.alt}
+                    width={650}
+                    height={400}
+                    className="w-full h-auto rounded-lg"
+                    loading={index === 0 ? undefined : 'lazy'}
+                    priority={index === 0}
+                    sizes="(max-width: 650px) 100vw, 650px"
+                    quality={100}
+                  />
+                  <div className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity bg-white/5" />
+                </div>
               </div>
             );
 
@@ -154,6 +164,12 @@ export default function CaseStudyBlogViewer({
   const lastScrollY = useRef(0);
   const [isHeaderHidden, setIsHeaderHidden] = useState(false);
   const [activeSection, setActiveSection] = useState<string>('');
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [mounted, setMounted] = useState(false);
+
+  // Mount flag for portal (SSR safety)
+  useEffect(() => { setMounted(true); }, []);
 
   // Extract heading sections for nav
   const sections = useMemo(() =>
@@ -162,6 +178,21 @@ export default function CaseStudyBlogViewer({
       .map(b => ({ id: slugify(b.text), label: b.text })),
     [study.content]
   );
+
+  const allImages = useMemo<ViewerImage[]>(() =>
+    study.content
+      .filter((b): b is Extract<BlogContentBlock, { type: 'image' }> => b.type === 'image')
+      .map(b => ({ src: b.src, label: b.alt })),
+    [study.content]
+  );
+
+  const handleImageClick = useCallback((src: string) => {
+    const idx = allImages.findIndex(img => img.src === src);
+    if (idx !== -1) {
+      setLightboxIndex(idx);
+      setLightboxOpen(true);
+    }
+  }, [allImages]);
 
   // IntersectionObserver to track active section
   useEffect(() => {
@@ -289,6 +320,7 @@ export default function CaseStudyBlogViewer({
   if (!isOpen) return null;
 
   return (
+    <>
     <div
       ref={overlayRef}
       className="fixed inset-0 z-50 bg-black casestudy-overlay-fade-in overflow-y-auto"
@@ -357,7 +389,7 @@ export default function CaseStudyBlogViewer({
         </header>
 
         {/* Content Blocks */}
-        <ContentRenderer blocks={study.content} />
+        <ContentRenderer blocks={study.content} onImageClick={handleImageClick} />
 
         {/* Project Card */}
         {projectCards[study.id] && (() => {
@@ -410,5 +442,21 @@ export default function CaseStudyBlogViewer({
         })()}
       </div>
     </div>
+
+    {mounted && createPortal(
+      <ImageViewer
+        images={allImages}
+        currentIndex={lightboxIndex}
+        isOpen={lightboxOpen}
+        onClose={() => {
+          setLightboxOpen(false);
+          document.body.style.overflow = 'hidden';
+        }}
+        onNavigate={(idx) => setLightboxIndex(idx)}
+        showLabel={false}
+      />,
+      document.body
+    )}
+    </>
   );
 }

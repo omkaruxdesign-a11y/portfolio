@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { useEffect, useCallback, useRef } from 'react';
-import { X, CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { X } from '@phosphor-icons/react';
 
 export interface ViewerImage {
   src: string;
@@ -16,6 +16,7 @@ interface ImageViewerProps {
   onClose: () => void;
   onNavigate: (index: number) => void;
   useCenteredView?: boolean; // If true, uses centered 16:9 aspect-video view
+  showLabel?: boolean; // If false, hides the label below the image
 }
 
 export default function ImageViewer({
@@ -25,6 +26,7 @@ export default function ImageViewer({
   onClose,
   onNavigate,
   useCenteredView = false,
+  showLabel = true,
 }: ImageViewerProps) {
   // Touch/swipe handling
   const touchStartX = useRef<number | null>(null);
@@ -131,34 +133,10 @@ export default function ImageViewer({
         {currentIndex + 1} / {images.length}
       </div>
 
-      {/* Previous Button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          goToPrevious();
-        }}
-        className="fixed left-[calc(50%-480px)] top-1/2 -translate-y-1/2 z-50 hidden md:block text-white/70 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition-colors animate-blur-fade-in"
-        aria-label="Previous image"
-      >
-        <CaretLeft size={20} weight="bold" />
-      </button>
-
-      {/* Next Button */}
-      <button
-        onClick={(e) => {
-          e.stopPropagation();
-          goToNext();
-        }}
-        className="fixed right-[calc(50%-480px)] top-1/2 -translate-y-1/2 z-50 hidden md:block text-white/70 hover:text-white p-2 rounded-full bg-white/10 hover:bg-white/20 transition-blur animate-blur-fade-in"
-        aria-label="Next image"
-      >
-        <CaretRight size={20} weight="bold" />
-      </button>
-
       {/* Main Image */}
       <div
         key={currentIndex}
-        className="relative max-w-[90vw] max-h-[85vh] w-auto h-auto overflow-auto image-transition"
+        className="relative max-w-[90vw] max-h-[85vh] w-auto h-auto overflow-hidden image-transition"
         onClick={(e) => e.stopPropagation()}
       >
         {useCenteredView ? (
@@ -174,55 +152,43 @@ export default function ImageViewer({
                 quality={100}
               />
             </div>
-            {/* Image Label */}
-            <p className="text-center text-white mt-4 text-base">
+            {showLabel && (
+              <p className="text-center text-white mt-4 text-base">
+                {currentImage.label}
+              </p>
+            )}
+          </>
+        ) : showLabel ? (
+          <>
+            <Image
+              src={currentImage.src}
+              alt={currentImage.label}
+              width={0}
+              height={0}
+              sizes="(max-width: 1200px) 90vw, 1200px"
+              className="w-auto h-auto max-w-[90vw] max-h-[68vh] rounded-lg object-contain"
+              priority
+              quality={100}
+            />
+            <p className="text-center text-white/80 mt-3 text-sm max-w-[800px] mx-auto">
               {currentImage.label}
             </p>
           </>
         ) : (
-          <>
-            <div className="relative w-[90vw] max-w-[800px] aspect-video">
-              <Image
-                src={currentImage.src}
-                alt={currentImage.label}
-                fill
-                className="object-contain rounded-lg"
-                priority
-                sizes="(max-width: 800px) 90vw, 800px"
-                quality={100}
-              />
-            </div>
-            {/* Image Label */}
-            <p className="text-center text-white mt-4 text-base">
-              {currentImage.label}
-            </p>
-          </>
+          <div className="relative w-[90vw] max-w-[1200px] aspect-video">
+            <Image
+              src={currentImage.src}
+              alt={currentImage.label}
+              fill
+              className="object-contain rounded-lg"
+              priority
+              sizes="(max-width: 1200px) 90vw, 1200px"
+              quality={100}
+            />
+          </div>
         )}
       </div>
 
-      {/* Mobile Navigation Arrows */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-[60] flex items-center gap-6 md:hidden">
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            goToPrevious();
-          }}
-          className="text-white/70 active:text-white p-3 rounded-full bg-white/10 active:bg-white/20 transition-colors"
-          aria-label="Previous image"
-        >
-          <CaretLeft size={24} weight="bold" />
-        </button>
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            goToNext();
-          }}
-          className="text-white/70 active:text-white p-3 rounded-full bg-white/10 active:bg-white/20 transition-colors"
-          aria-label="Next image"
-        >
-          <CaretRight size={24} weight="bold" />
-        </button>
-      </div>
 
       {/* Image transition animation */}
       <style jsx global>{`

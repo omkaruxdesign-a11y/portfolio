@@ -46,7 +46,7 @@ export const caseStudiesData: CaseStudy[] = [
   {
     id: "nothing",
     title: "Essential Suggestions",
-    subtext: "Mobile widget • visual • Product thinking",
+    subtext: "Mobile widget • Visual Design • Product thinking",
     isNDA: false,
     metadata: "Concept • App-Widget • 2025",
     description: "This was my submission for Nothing's Community submissions where community submits their ideas of app-widgets and Nothing then chooses one and works with that person. It was quite an experience, worked on something different than usual phone/web things.",

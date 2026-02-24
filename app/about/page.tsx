@@ -178,21 +178,21 @@ export default function AboutPage() {
             title="How an Indian Boy Discovers about Finance"
             image="/blogs/Finance.jpg"
             excerpt="A personal journey of discovering financial literacy and what it means for a young Indian navigating money, savings, and the future."
-            date="Mar 25, 2025"
+            date="Jun 22, 2025"
             link="#"
           />
           <BlogCard
             title="Judge a book by it's cover"
             image="/blogs/book1.jpg"
             excerpt="Why first impressions in design — and life — matter more than we like to admit. A designer's take on visual judgment."
-            date="Mar 25, 2025"
+            date="Oct 4, 2024"
             link="#"
           />
           <BlogCard
             title="Privilege"
             image="/blogs/privilege.jpg"
             excerpt="Reflecting on the invisible advantages we carry and how awareness of privilege shapes the way we build products and interact with the world."
-            date="Mar 25, 2025"
+            date="Jul 18, 2024"
             link="#"
           />
         </div>

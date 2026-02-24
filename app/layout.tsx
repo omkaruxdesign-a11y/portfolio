@@ -17,14 +17,14 @@ const dmMono = DM_Mono({
 
 export const metadata: Metadata = {
   title: "Omkar Mangalekar - Product Designer",
-  description: "Product Designer with 2+ years of experigence. I love things that add value to lives. Currently at SocialSonar, previously at Hyperly and VestorGrow.",
+  description: "Product Designer with 2 years of experigence. I love things that add value to lives. Currently at SocialSonar, previously at Hyperly and VestorGrow.",
 
   // Open Graph (for LinkedIn, Facebook, WhatsApp, etc.)
   openGraph: {
     type: "website",
     locale: "en_US",
     title: "Omkar Mangalekar - Product Designer",
-    description: "Product Designer with 2.5+ years of experience. I love things that add value to lives.",
+    description: "Product Designer with 2 years of experience. I love things that add value to lives.",
     siteName: "Omkar Mangalekar Portfolio",
     images: [
       {

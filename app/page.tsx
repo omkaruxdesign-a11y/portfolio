@@ -205,6 +205,20 @@ export default function Home() {
           </p>
         </DotRevealSection>
 
+        {/* <DotRevealSection className={`px-8 py-4 border-b border-[#2a2a2a] ${isLoaded ? 'animate-blur-fade-in animate-delay-2' : 'opacity-0'}`}>
+          <h3 className="relative text-sm font-mono uppercase text-white">
+            Recently Launched
+          </h3>
+
+          <a href="https://peerlist.io/omkarux/project/at-core" target="_blank" rel="noreferrer" className="mt-2 block w-full ">
+            <img
+              src="https://peerlist.io/api/v1/projects/embed/PRJHBARA779ARJRDK1PLBBG8PB9OQN?showUpvote=true&theme=dark"
+              alt="at core"
+              style={{ width: '100%', height: '72px' }}
+            />
+          </a>
+        </DotRevealSection> */}
+
         {/* CASE STUDIES Section */}
         <DotRevealSection className={`p-8 border-b border-[#2a2a2a] space-y-6 ${isLoaded ? 'animate-blur-fade-in animate-delay-3' : 'opacity-0'}`}>
           {/* Section Heading */}

@@ -157,15 +157,15 @@ export const blogCaseStudies: BlogCaseStudy[] = [
       },
       {
         type: "heading",
-        text: "Impact"
+        text: "Learnings"
       },
       {
         type: "bullets",
         items: [
-          "Reduced time of creating a bill from 7 days to 4 days",
-          "Reduced 50% manual errors which caused delay in the process",
-          "Modernized interface for improved accessibility compliance",
-          "Average task completion time by 50% making work easier of 100s of employees"
+          "Working with a space constraint",
+          "Priortizing the information to display",
+          "working with a provided guidelines",
+          "You get happiness by creating such fun projects"
         ]
       },
       {

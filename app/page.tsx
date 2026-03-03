@@ -178,9 +178,9 @@ export default function Home() {
               <Image
                 src="/logos/profile-pic.png"
                 alt="Omkar profile"
-                width={40}
+                width={48}
                 height={40}
-                className="rounded-sm"
+                className="rounded-sm mb-1"
               />
             </div>
 
@@ -223,7 +223,7 @@ export default function Home() {
         <DotRevealSection className={`p-8 border-b border-[#2a2a2a] space-y-6 ${isLoaded ? 'animate-blur-fade-in animate-delay-3' : 'opacity-0'}`}>
           {/* Section Heading */}
           <h3 className="relative text-sm font-mono uppercase text-white">
-            CASE STUDIES
+            Products I built
           </h3>
 
           {/* Project Cards Grid */}

@@ -12,7 +12,7 @@ const offScreenImages: AutoScrollImage[] = [
   { src: '/offscreen/6.jpeg', description: 'Highest peak in Maharashtra...check!' },
   { src: '/offscreen/7.jpg', description: 'Shimla, the only place I loved except Kolhapur (my hometown)' },
   { src: '/offscreen/12.jpg', description: 'Long exposure for the first time' },
-  { src: '/offscreen/book1.jpg', description: 'Book that showed me a structure to work (Not that I applied it though:)' },
+  { src: '/offscreen/book1.jpg', description: 'Book that showed me a structure to work' },
   { src: '/offscreen/book2.jpg', description: 'Love reading about people who\'ve achieved something in life' },
   { src: '/offscreen/book3.jpg', description: 'Read this one in a train journey. Great one!' },
 ];

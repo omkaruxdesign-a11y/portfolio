@@ -767,14 +767,7 @@ export const blogCaseStudies: BlogCaseStudy[] = [
         alt: "SocialSonar full report builder"
       },
       
-      {
-        type: "heading",
-        text: "Reflection"
-      },
-      {
-        type: "text",
-        text: "Most decisions on this project were made through instinct and fast iteration rather than documented reasoning. With the design process knowledge I have built since, I would have framed the problem more deliberately upfront and documented the reasoning behind each decision as I made it, which would have made presenting and defending this work significantly easier."
-      }
+    
     ]
   },
   {

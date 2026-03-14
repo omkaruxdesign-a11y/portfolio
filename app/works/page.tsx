@@ -128,7 +128,7 @@ export default function WorksPage() {
       {/* SECTION 2: WORKS */}
       <DotRevealSection className={`p-8 border-b border-[#2a2a2a] space-y-4 ${isLoaded ? 'animate-blur-fade-in animate-delay-2' : 'opacity-0'}`}>
         <h3 className="relative text-sm font-mono uppercase tracking-wider text-white">
-          WORKS
+          MORE FROM WORKS
         </h3>
 
         <p className="relative text-base text-[#7a7a7a]">
@@ -140,7 +140,7 @@ export default function WorksPage() {
           className="relative grid grid-cols-1 md:grid-cols-2 gap-3 pt-4"
           onMouseLeave={() => !isMobile && setHoveredWorkId(null)}
         >
-            {caseStudiesData.map((caseStudy, index) => {
+            {caseStudiesData.filter(cs => cs.id !== 'nothing' && cs.id !== 'socialsonar').map((caseStudy, index) => {
             if (caseStudy.isComingSoon) {
               return (
                 <div

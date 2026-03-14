@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Omkar Mangalekar - Product Designer",
-    description: "Product Designer with 2.5+ years of experience. I love things that add value to lives.",
+    description: "Product Designer with 2 years of experience. I love things that add value to lives.",
     images: ["/preview/preview.png"],
   },
 

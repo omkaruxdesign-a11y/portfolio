@@ -613,6 +613,171 @@ export const blogCaseStudies: BlogCaseStudy[] = [
     ],
   },
   {
+    id: "socialsonar",
+    title: "SocialSonar - AI Social Listening Tool",
+    subtext: "Entire product journey from 0 to 1 as founding designer",
+    thumbnail: "/works/socialsonar/1.png",
+    content: [
+      {
+        type: "image",
+        src: "/works/socialsonar/1.png",
+        alt: "SocialSonar hero image"
+      },
+      {
+        type: "heading",
+        text: "Impact"
+      },
+      {
+        type: "bullets",
+        items: [
+          "Reduced client report creation time from 2 days to minutes",
+          "Designed the full product from 0 to 1 as the sole founding designer",
+          "Shipped a whitelabeled report builder that directly addressed the primary demand from agency users"
+        ]
+      },
+      {
+        type: "image",
+        src: "/works/socialsonar/2.png",
+        alt: "SocialSonar product overview"
+      },
+      {
+        type: "heading",
+        text: "Context"
+      },
+      {
+        type: "text",
+        text: "SocialSonar is an AI powered social listening tool that helps marketing agencies track brand mentions, sentiment, and performance across social media and the internet. As the founding designer I owned the end to end product design, from core product flows to pitch decks and social media creatives."
+      },
+      {
+        type: "heading",
+        text: "User Groups"
+      },
+      {
+        type: "bullets",
+        items: [
+          "Marketing managers at agencies handling multiple brand clients",
+          "Their teams who spend most of their day inside analytics tools like SocialSonar"
+        ]
+      },
+      {
+        type: "heading",
+        text: "What are we focusing on?"
+      },
+      {
+        type: "text",
+        text: "SocialSonar is a vast product with a lot of moving parts. For this case study we will be focusing on one specific flow we shipped: the report creation experience. This was one of the most requested and impactful features we built for agency users."
+      },
+      {
+        type: "heading",
+        text: "The Problem"
+      },
+      {
+        type: "text",
+        text: "Marketing managers at agencies were spending hours, sometimes days, manually compiling client reports from data scattered across dashboards. The reports had to look professional, feel branded, and contain only what the client needed. No existing tool made this easy, which meant managers were occupied in creating reports more than doing the actual work they were reporting on."
+      },
+      {
+        type: "image",
+        src: "/works/socialsonar/3.png",
+        alt: "SocialSonar problem context"
+      },
+      {
+        type: "heading",
+        text: "What We Learned"
+      },
+      {
+        type: "text",
+        text: "We sat with brand managers early to understand their workflow before designing anything. The insight that changed everything: clients only need a birds eye view of the data. The deep insights are what managers cover for them. This told us the problem was not about showing more data. It was about showing less, better, and making it feel like the agency's own work rather than the tool's output."
+      },
+      {
+        type: "image",
+        src: "/works/socialsonar/4.png",
+        alt: "SocialSonar research findings"
+      },
+      {
+        type: "heading",
+        text: "Key Design Decisions"
+      },
+      {
+        type: "numbered",
+        items: [
+          {
+            text: "Modular report builder with selective sections",
+            nested: []
+          },
+          {
+            text: "Whitelabeling as the first step in the flow",
+            nested: []
+          },
+          {
+            text: "Live document preview while building",
+            nested: []
+          }
+        ]
+      },
+      {
+        type: "heading",
+        text: "Modular Report Builder"
+      },
+      {
+        type: "text",
+        text: "Since data needs varied from client to client, we made every report section optional and toggleable rather than exporting everything by default. A fixed template would have recreated the exact problem managers faced on other platforms, reports packed with data clients did not need or understand. The trade-off was added complexity in the builder, which we accepted because relevance mattered more than completeness."
+      },
+      // {
+      //   type: "image",
+      //   src: "/works/socialsonar/5.png",
+      //   alt: "SocialSonar modular report builder"
+      // },
+      {
+        type: "heading",
+        text: "Whitelabeling First"
+      },
+      {
+        type: "text",
+        text: "Managers needed reports to carry their agency's branding, not the tool's. This was the primary demand from users and the reason they would trust and adopt the feature at all. So we made whitelabeling the first step in the creation flow rather than a setting buried at the end. The trade-off was asking users to set up branding before seeing any content, but the payoff was a report that felt like theirs from the very first moment."
+      },
+      {
+        type: "image",
+        src: "/works/socialsonar/6.png",
+        alt: "SocialSonar whitelabeling step"
+      },
+      {
+        type: "heading",
+        text: "Live Document Preview"
+      },
+      {
+        type: "text",
+        text: "During testing we observed a painful pattern. Managers would build a report, download it, notice something off, then go back and rebuild with different inputs. This cycle was adding significant time to an already slow process. We introduced a live preview panel that updated in real time as the report was built. The trade-off was reduced screen space for the builder panel, which we accepted because eliminating the rebuild cycle was directly tied to our core goal of saving time."
+      },
+      {
+        type: "image",
+        src: "/works/socialsonar/7.png",
+        alt: "SocialSonar live document preview"
+      },
+      {
+        type: "heading",
+        text: "The Solution"
+      },
+      {
+        type: "text",
+        text: "A report builder that lets managers create fully whitelabeled, customizable, client ready reports in minutes with a live preview so what they build is exactly what gets delivered."
+      },
+      {
+        type: "image",
+        src: "/works/socialsonar/8.png",
+        alt: "SocialSonar full report builder"
+      },
+      
+      {
+        type: "heading",
+        text: "Reflection"
+      },
+      {
+        type: "text",
+        text: "Most decisions on this project were made through instinct and fast iteration rather than documented reasoning. With the design process knowledge I have built since, I would have framed the problem more deliberately upfront and documented the reasoning behind each decision as I made it, which would have made presenting and defending this work significantly easier."
+      }
+    ]
+  },
+  {
     id: "secards",
     title: "Building the only directory of secured credit cards in India, helping people to begin their credit journey",
     subtext: "Directory of Secured cards in India",

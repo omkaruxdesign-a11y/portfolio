@@ -12,7 +12,7 @@ import { blogCaseStudies, type BlogCaseStudy } from "./data/blogCaseStudies";
 const caseStudyDescriptions: Record<string, { title: string; readTime: string }> = {
   lentlay: {
     title: "How I ideated, designed, built, launched Lentlay on Peerlist which got staff picked!",
-    readTime: "4 min read",
+    readTime:"4 min read",
   },
   secards: {
     title: "Building the only directory of secured credit cards in India, helping people to begin their credit journey",
@@ -190,6 +190,7 @@ export default function Home() {
                 <span className="text-[#7a7a7a] font-light font-serif">Hi, I am </span>
                 <span className="text-white font-light font-serif">Omkar</span>
               </h1>
+
               <h2 className="text-3xl">
                 <span className="text-[#7a7a7a] font-serif">and I love products</span>
                 <span className="text-white font-light font-serif"> with a great PMF</span>
@@ -218,6 +219,60 @@ export default function Home() {
             />
           </a>
         </DotRevealSection> */}
+
+        {/* WORKS Section */}
+        <DotRevealSection className={`p-8 border-b border-[#2a2a2a] space-y-6 ${isLoaded ? 'animate-blur-fade-in animate-delay-3' : 'opacity-0'}`}>
+          <h3 className="relative text-sm font-mono uppercase text-white">
+            Works
+          </h3>
+
+          <p className="relative text-base text-[#7a7a7a]">
+          Here&apos;s a glimpse of my previous works.
+        </p>
+
+          <div
+            className="relative grid grid-cols-1 md:grid-cols-2 gap-6 items-start"
+            onMouseLeave={() => !isMobile && setHoveredCaseStudyId(null)}
+          >
+            {blogCaseStudies.filter(s => s.id === 'nothing' || s.id === 'socialsonar').map((study) => {
+              const studyImages = study.content
+                .filter((block): block is { type: "image"; src: string; alt: string } => block.type === "image")
+                .map((block) => block.src);
+              return (
+                <button
+                  key={study.id}
+                  onClick={() => setActiveBlogCaseStudy(study)}
+                  onMouseEnter={() => {
+                    if (isMobile) return;
+                    setHoveredCaseStudyId(study.id);
+                    setHoveredCaseStudyImages(studyImages);
+                    setIsCursorPreviewVisible(true);
+                  }}
+                  onMouseLeave={() => {
+                    if (isMobile) return;
+                    setIsCursorPreviewVisible(false);
+                  }}
+                  className={`group text-left w-full h-full cursor-pointer transition-all duration-300 ${!isMobile && hoveredCaseStudyId && hoveredCaseStudyId !== study.id ? 'blur-[2px] opacity-50' : ''}`}
+                >
+                  <div className="relative w-full aspect-video rounded-lg overflow-hidden">
+                    <Image
+                      src={study.thumbnail}
+                      alt={study.title}
+                      fill
+                      className="object-cover transition-all duration-300 group-hover:brightness-110"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      quality={100}
+                    />
+                  </div>
+                  <div className="mt-3">
+                    <p className="text-white text-base font-regular">{study.title}</p>
+                    <p className="text-[#7a7a7a] text-sm mt-1">{study.subtext}</p>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </DotRevealSection>
 
         {/* CASE STUDIES Section */}
         <DotRevealSection className={`p-8 border-b border-[#2a2a2a] space-y-6 ${isLoaded ? 'animate-blur-fade-in animate-delay-3' : 'opacity-0'}`}>
